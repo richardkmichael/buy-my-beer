@@ -2,7 +2,6 @@ source 'http://rubygems.org'
 
 # Core
 gem 'rails', '3.1.0.rc4'
-gem 'sqlite3'
 gem 'pg'  # Heroku: They override config/database.yml ?
 
 # Asset template engines
@@ -18,6 +17,11 @@ gem 'omniauth'  # Can I require only oauth?  Rip out OpenID, all the XML stuff, 
 
 # Deployment
 gem 'heroku'
+
+# Continue using sqlite3 in development and test for now.
+group :development, :test do
+  gem 'sqlite3'
+end
 
 group :test do
   # Pretty printed test output
