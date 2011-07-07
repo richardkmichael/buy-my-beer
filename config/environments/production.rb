@@ -11,13 +11,14 @@ BuyMyBeer::Application.configure do
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
 
-  # Turn compression off until Rails 3.1.0.rc5 gets execjs fixed to use node.js (available on Heroku).
-  # http://stackoverflow.com/questions/6075961/problem-deploying-rails-3-1-project-to-heroku-could-not-find-a-javascript-runtim/6076852#6076852
+  # FIXME: Turn compression off until Rails 3.1.0.rc5 gets execjs fixed to use node.js (available on Heroku).
+  # FIXME: http://stackoverflow.com/questions/6075961/problem-deploying-rails-3-1-project-to-heroku-could-not-find-a-javascript-runtim/6076852#6076852
   # Compress JavaScripts and CSS
   config.assets.compress = false
 
   # Specify the default JavaScript compressor
-  config.assets.js_compressor  = :uglifier
+  # FIXME: Turning off compression above does not prevent the uglifier requirement here. :-(  Comment out.
+  # config.assets.js_compressor  = :uglifier
 
   # Specifies the header that your server uses for sending files
   # (comment out if your front-end server doesn't support this)
