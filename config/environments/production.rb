@@ -54,4 +54,11 @@ BuyMyBeer::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+  # Turn on HTTP BASIC AUTH.
+  # Shameless copy from: http://olemortenamundsen.wordpress.com/2011/04/05/ruby-secure-staging-environment-of-your-public-app-from-users-and-bots/
+  config.middleware.insert_after(::Rack::Lock, '::Rack::Auth::Basic', 'Production') do |username, password|
+    [username, password] == ['production', 'S5AIgIHt']
+  end
+
 end
