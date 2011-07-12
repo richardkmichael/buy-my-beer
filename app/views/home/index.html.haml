@@ -1,3 +1,10 @@
+-# TODO: Q: Here I must use the class variable?  There is no 'message'.
 %h1= @message
 
-%h2= @current_user.email + ' is logged in!'
+-# TODO: Q: Should I use class variables here?  @current_user vs. current_user?  Odd they are both defined.
+%h2= "#{@current_user.email} (id: #{@current_user.id}) is logged in!"
+
+
+.projects
+  %h2 Projects
+  = projects_for(@projects)

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  status: false
+  last_commit: MyString
+
+two:
+  name: MyString
+  status: false
+  last_commit: MyString

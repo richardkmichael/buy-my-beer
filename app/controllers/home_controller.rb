@@ -5,6 +5,8 @@ class HomeController < PagesController
   def index
     @message = 'Hello, Index World!'
     @current_user = current_user
+
+    @projects = User.find_by_id(current_user.id).projects
   end
 
   def user_root

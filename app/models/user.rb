@@ -1,4 +1,10 @@
+# TODO: validators
+
 class User < ActiveRecord::Base
+
+  has_many :collaborations
+  has_many :projects, :through => :collaborations
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
 

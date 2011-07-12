@@ -10,7 +10,28 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110619181417) do
+ActiveRecord::Schema.define(:version => 20110708175942) do
+
+  create_table "builds", :force => true do |t|
+    t.string   "name"
+    t.boolean  "status"
+    t.string   "last_commit"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "collaborations", :force => true do |t|
+    t.integer  "project_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "projects", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
