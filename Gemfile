@@ -25,6 +25,7 @@ gem 'heroku'
 # Continue using sqlite3 in development and test for now.
 group :development, :test do
   gem 'sqlite3'
+  gem 'minitest-rails'
 end
 
 group :test do
