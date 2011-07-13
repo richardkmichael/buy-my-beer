@@ -38,5 +38,10 @@ module BuyMyBeer
 
     # Enable the asset pipeline
     config.assets.enabled = true
+
+    # Enable minitest spec and fixtures.
+    config.generators do |generator|
+      generator.test_framework :mini_test, :spec => true, :fixture => true
+    end
   end
 end

@@ -1,5 +1,6 @@
 module HomeHelper
 
+  # TODO: Franck insists we can do this nicely in HAML.  Investigate.
   def projects_for(projects)
     project_content = ''.html_safe
 
