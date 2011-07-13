@@ -6,7 +6,8 @@ class HomeController < PagesController
     @message = 'Hello, Index World!'
     @current_user = current_user
 
-    @projects = User.find_by_id(current_user.id).projects
+    # @projects = User.find_by_id(current_user.id).projects
+    @projects = current_user.projects
   end
 
   def user_root
