@@ -1,3 +1,3 @@
-if defined?(Footnotes) && Rails.env.development?
-  Footnotes.run!
-end
+# if defined?(Footnotes) && Rails.env.development?
+#   Footnotes.run!
+# end
