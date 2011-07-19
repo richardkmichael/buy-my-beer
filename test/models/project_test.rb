@@ -16,7 +16,7 @@ class ProjectTest < MiniTest::Rails::Model
   # Should we be testing the algorithm too?  Or just that it's != null
   it "must be have a url" do
 
-    # @project.url = 'foo'
+    puts "@project.url = #{@project.url}"
 
     # A few ways to do this with Minitest's assertions/expectations
     # @project.url.wont_be_empty
