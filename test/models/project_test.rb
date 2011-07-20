@@ -16,17 +16,16 @@ class ProjectTest < MiniTest::Rails::Model
   # Should we be testing the algorithm too?  Or just that it's != null
   it "must be have a url" do
 
-    puts "@project.url = #{@project.url}"
-
     # A few ways to do this with Minitest's assertions/expectations
     # @project.url.wont_be_empty
     refute_empty @project.url, "Project's URL is empty!"
   end
 
-  # describe "when doing its thing" do
-  #   it "must be interesting" do
-  #     @project.blow_minds!
-  #     @project.interesting?.must_equal true
-  #   end
+  # TODO: A uniqueness test on the URL.
+  # it 'must have a unique url' do
+  #   # create a Project with a known URL -> use chronic to stick Time.now?  but
+  #   # that's Project implementation specific.  it would be nice to hijack the
+  #   # object and change the random URL generate.
   # end
+
 end
