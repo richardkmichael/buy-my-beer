@@ -52,6 +52,11 @@ GEM
       multipart-post (~> 1.1.0)
       rack (>= 1.1.0, < 2)
     haml (3.1.2)
+    haml-rails (0.3.4)
+      actionpack (~> 3.0)
+      activesupport (~> 3.0)
+      haml (~> 3.0)
+      railties (~> 3.0)
     heroku (2.3.6)
       launchy (>= 0.3.2)
       rest-client (~> 1.6.1)
@@ -187,7 +192,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-script
   devise
-  haml
+  haml-rails
   heroku
   jquery-rails
   minitest-rails
