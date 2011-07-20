@@ -7,14 +7,14 @@ class ProjectTest < MiniTest::Rails::Model
     @project = Project.new
   end
 
-  it "must have a name" do
+  it 'must have a name' do
     @project.name = 'Test Project'
     @project.valid?.must_equal true
   end
 
   # In fact, we want the URL to be unique.. how to test that?
   # Should we be testing the algorithm too?  Or just that it's != null
-  it "must be have a url" do
+  it 'should have an auto-generated url' do
 
     # A few ways to do this with Minitest's assertions/expectations
     # @project.url.wont_be_empty
