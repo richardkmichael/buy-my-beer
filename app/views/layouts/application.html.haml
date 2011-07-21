@@ -9,18 +9,17 @@
 %body
 
   .header
-    - if @current_user
-      -# TODO: Q: Should I use class variables here?  @current_user vs. current_user?
-      %h2= "#{@current_user.email} (id: #{@current_user.id}) is logged in!"
+    - if current_user
+      %h2= "#{current_user.email} (id: #{current_user.id})"
 
   .flash
     -flash.each do |key, value|
-      -# TODO: Q: Will HAML let me do: ".#{key}= #{value}"
+      -# TODO: Q: Will HAML let me do: ".#{key}= #{value}"?
       = content_tag(:div, value, :class => "#{key}")
 
   = yield
 
-  -# TODO: Devise is already doing this, how?
+  -# TODO: Q: Devise is already doing this, how?
   -# = link_to 'Sign in with GitHub', user_omniauth_authorize_path(:github)
 
   -# Required for Devise ; as indicated by 'rails generate devise:install'.

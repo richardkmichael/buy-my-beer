@@ -1,1 +1,4 @@
-.project= project.name
+.project
+  %span.name= project.name
+  -# TODO: This is now a querying view.  How to handle :through relationships in views?  Eager load?
+  %span.users= project.users.map{|u| u.email}

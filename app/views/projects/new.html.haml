@@ -1,8 +1,4 @@
-%h1 Projects#new
-%p Find me in app/views/projects/new.html.haml
-
--# Commented b/c this is now in the app layout.
--# %h2= @current_user.email
+%h1 New Project
 
 = form_for @project do |f|
   = f.label      :name, 'Name'
