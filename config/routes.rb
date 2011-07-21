@@ -1,10 +1,9 @@
 BuyMyBeer::Application.routes.draw do
 
+  resource :projects
+
   # Devise authentication for the user routes.
   devise_for :users, :controllers => {:omniauth_callbacks => 'omniauth_callbacks'}
-  # devise_for :users
-
-  match '/home', :to => 'home#index'
 
   # Required for Devise ; as indicated by 'rails generate devise:install'.
   # user_root :to => 'home#user_root'

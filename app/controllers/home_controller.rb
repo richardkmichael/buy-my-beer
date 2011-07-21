@@ -3,10 +3,9 @@ class HomeController < PagesController
   before_filter :authenticate_user!
 
   def index
-    @message = 'Hello, Index World!'
+    @message = 'Home#index'
     @current_user = current_user
 
-    # @projects = User.find_by_id(current_user.id).projects
     @projects = current_user.projects
   end
 

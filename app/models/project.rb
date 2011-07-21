@@ -1,28 +1,30 @@
 class Project < ActiveRecord::Base
 
-  def initialize(attributes = nil, options = {})
-    super(attributes, options)
-    self[:url] = generate_random_url
-  end
-
-  # TODO: Q: How to insure :url is read only?
+  # TODO: Q: How to insure :url is read only?  Undefine url=() ?
   attr_accessible :name, :url
 
-  # TODO: Q: Do we need other validations?  What matters?  Name length?
+  # TODO: Q: Other name validations?  What matters? length?
   validates :name, :presence => true
 
   # TODO: Q: This validator breaks.  Why?
   # validates :url, :uniqueness => true
 
+  validates :users, :presence => true
+
+  has_many :collaborations
+  has_many :users, :through => :collaborations
+
+  # TODO: These should be turned into scopes on a Build model?
   has_many :success_builds, :class_name => 'Build',
                             :conditions => { :status => true }
 
   has_many :failed_builds, :class_name => 'Build',
                            :conditions => { :status => false }
 
-  has_many :collaborations
-  has_many :users, :through => :collaborations
-
+  def initialize(attributes = nil, options = {})
+    super(attributes, options)
+    self[:url] = generate_random_url
+  end
 
   private
 

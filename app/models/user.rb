@@ -1,6 +1,10 @@
-# TODO: validators
-
 class User < ActiveRecord::Base
+
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me
+
+  # TODO: validators
+  # validates :email ... 
 
   has_many :collaborations
   has_many :projects, :through => :collaborations
@@ -12,17 +16,9 @@ class User < ActiveRecord::Base
   devise :omniauthable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
-
   # Devise authentication method.
   def self.find_for_github_oauth(access_token, signed_in_resource=nil)
     data = access_token['extra']['user_hash']
-
-    # Debugging.
-    # data.each_pair do |k,v|
-    #   puts "data/user_hash: #{k} = #{v}"
-    # end
 
     # Retreive existing user based on their GitHub email address.
     # TODO: Handle user changing GitHub email address; our stub account will not be found.
@@ -34,7 +30,7 @@ class User < ActiveRecord::Base
       password = Devise.friendly_token[0,20]
       # TODO: A trigger here, to alert the user we've created an account for them.
       # TODO: Fire an email if there's an address?  Display a notification in the view?  What about API?
-      # FIXME: If the user has no email, this will fail.
+      # TODO: If the user has no email, this will fail.
       User.create!(:email                 => data['email'],
                    :password              => password,
                    :password_confirmation => password)

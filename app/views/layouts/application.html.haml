@@ -7,6 +7,17 @@
   = csrf_meta_tags
 
 %body
+
+  .header
+    - if @current_user
+      -# TODO: Q: Should I use class variables here?  @current_user vs. current_user?
+      %h2= "#{@current_user.email} (id: #{@current_user.id}) is logged in!"
+
+  .flash
+    -flash.each do |key, value|
+      -# TODO: Q: Will HAML let me do: ".#{key}= #{value}"
+      = content_tag(:div, value, :class => "#{key}")
+
   = yield
 
   -# TODO: Devise is already doing this, how?
@@ -15,3 +26,6 @@
   -# Required for Devise ; as indicated by 'rails generate devise:install'.
   %p.notice= notice
   %p.alert= alert
+
+  = debug(params) if Rails.env.development?
+  = debug(session) if Rails.env.development?
