@@ -1,5 +1,15 @@
-.projects
+#projects
+
   %h2 Projects
   %h2.button= link_to('Create a New Project', new_project_path)
-  = render @projects
+
+  -# TODO: Move this to a partial to avoid outputting the empty table.
+  %table.projects{:border => '1'}
+    %tr
+      %th Name
+      %th Collaborators
+      %th URL
+      %th Action
+    = render @projects
+
   = 'You have no projects!' if @projects.empty?
