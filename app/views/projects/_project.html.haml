@@ -2,4 +2,4 @@
   %span.name= project.name
   -# TODO: This is now a querying view.  How to handle :through relationships in views?  Eager load?
   %span.users= project.users.map{|u| u.email}
-  %span.button= link_to('Delete', projects_path(project), :method => :delete)
+  %span.button= link_to('Delete', project_path(project.id), :method => :delete)

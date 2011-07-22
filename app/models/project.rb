@@ -11,10 +11,10 @@ class Project < ActiveRecord::Base
 
   validates :users, :presence => true
 
-  has_many :collaborations
+  has_many :collaborations, :dependent => :destroy
   has_many :users, :through => :collaborations
 
-  # TODO: These should be turned into scopes on a Build model?
+  # TODO: Franck suggests these should be scopes on the Build model.
   has_many :success_builds, :class_name => 'Build',
                             :conditions => { :status => true }
 

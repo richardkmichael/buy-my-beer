@@ -1,6 +1,6 @@
 BuyMyBeer::Application.routes.draw do
 
-  resource :projects
+  resources :projects
 
   # Devise authentication for the user routes.
   devise_for :users, :controllers => {:omniauth_callbacks => 'omniauth_callbacks'}

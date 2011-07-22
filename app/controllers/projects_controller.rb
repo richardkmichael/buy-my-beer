@@ -18,12 +18,16 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    @project = Project.find(params[:project])
 
-    if @project.destroy
-      flash[:success] = 'Delete project succeeded.'
-    else
-      flash[:failure] = "Delete project failed: #{@project.errors.full_messages}."
+    begin
+      @project = Project.find(params[:id])
+      if @project.destroy
+        flash[:success] = "Delete project '#{@project.name}' succeeded."
+      else
+        flash[:failure] = "Delete project failed: #{@project.errors.full_messages}."
+      end
+    rescue ActiveRecord::RecordNotFound => e
+      flash[:failure] = "Delete project failed: #{e.message}."
     end
 
     # There is no destroy.html.haml, always redirect to the index.
