@@ -1,6 +1,5 @@
 %tr.project
   %td.name= project.name
-  -# TODO: This is now a querying view.  How to handle :through relationships in views?  Eager load?
   %td.collaborators= project.users.map{|u| u.email}
   %td.url= project.url
   %td.action= link_to('Delete', project_path(project.id), :method => :delete)

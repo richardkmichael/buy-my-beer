@@ -3,8 +3,8 @@ class HomeController < PagesController
   before_filter :authenticate_user!
 
   def index
-    # TODO: Q: index.haml.html -> _project.haml.html which queries for users.  Eager load?
-    @projects = current_user.projects
+    # Eager load users to prevent the _project.html.haml view from querying.
+    @projects = current_user.projects.includes(:users)
   end
 
   def user_root
