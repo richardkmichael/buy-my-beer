@@ -14,12 +14,7 @@ class Project < ActiveRecord::Base
   has_many :collaborations, :dependent => :destroy
   has_many :users, :through => :collaborations
 
-  # TODO: Franck suggests these should be scopes on the Build model.
-  has_many :success_builds, :class_name => 'Build',
-                            :conditions => { :status => true }
-
-  has_many :failed_builds, :class_name => 'Build',
-                           :conditions => { :status => false }
+  has_many :builds, :dependent => :destroy
 
   def initialize(attributes = nil, options = {})
     super(attributes, options)

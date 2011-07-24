@@ -5,4 +5,10 @@ class Build < ActiveRecord::Base
   # TODO:    convenient if seen committers were able to log in.
   has_one :last_commiter, :class_name => 'User'
 
+  # TODO: Destroy builds when a project is deleted.
+  belongs_to :project
+
+  scope :passed, where(:status => true)
+  scope :failed, where(:status => false)
+
 end
