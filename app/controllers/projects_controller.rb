@@ -7,10 +7,6 @@ class ProjectsController < ApplicationController
     @projects = current_user.projects.includes(:users)
   end
 
-  def user_root
-    @message = 'Hello, User Root World!'
-  end
-
   def new
     @project = Project.new
   end
@@ -28,8 +24,23 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def destroy
+  def show
+    begin
+      # @project = Project.includes(:builds).find(params[:id])
+      @project = Project.find(params[:id])
 
+      # if @project
+      #   render @project
+      # else
+      #   flash[:failure] = "Show project failed: #{@project.errors.full_messages}."
+      # end
+    rescue ActiveRecord::RecordNotFound => e
+      flash[:failure] = "Show project failed: #{e.message}."
+      redirect_to root_path
+    end
+  end
+
+  def destroy
     begin
       @project = Project.find(params[:id])
       if @project.destroy
@@ -44,6 +55,12 @@ class ProjectsController < ApplicationController
     # There is no destroy.html.haml, always redirect to the index.
     # TODO: Q: Use render() instead?  Why round-trip to the browser?
     redirect_to root_path
+  end
+
+  ############################
+
+  def user_root
+    @message = 'Hello, User Root World!'
   end
 
 end

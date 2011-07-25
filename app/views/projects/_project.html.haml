@@ -1,5 +1,5 @@
 %tr.project
-  %td.name= project.name
+  %td.name= link_to(project.name, project_path(project.id))
   %td.collaborators= project.users.map{|u| u.email}
   %td.url= project.url
   %td.action= link_to('Delete', project_path(project.id), :method => :delete)
