@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 # Core
-gem 'rails', '3.1.0.rc4'
+gem 'rails', '3.1.0.rc5'
 gem 'pg'  # Heroku: They override config/database.yml ?
 
 # Asset template engines
@@ -30,4 +30,8 @@ group :development, :test do
   gem 'sqlite3'
   gem 'minitest-rails'
   gem 'cucumber-rails'
+  gem 'autotest-rails'
+  gem 'autotest-rails-pure'
+  gem 'autotest-fsevent'
+  gem 'autotest-growl'
 end
