@@ -13,9 +13,10 @@
 ActiveRecord::Schema.define(:version => 20110726100403) do
 
   create_table "builds", :force => true do |t|
-    t.string   "name"
     t.boolean  "status"
+    t.string   "name"
     t.string   "last_commit"
+    t.integer  "last_commiter_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "project_id"

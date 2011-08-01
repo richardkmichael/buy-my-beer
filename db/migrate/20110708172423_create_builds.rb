@@ -4,7 +4,7 @@ class CreateBuilds < ActiveRecord::Migration
       t.boolean :status
       t.string :name
       t.string :last_commit
-      t.integer :user_id
+      t.integer :last_commiter_id
 
       t.timestamps
     end

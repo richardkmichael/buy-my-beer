@@ -1,5 +1,5 @@
 %tr.build
   %td.status= build.status
   %td.last_commit= build.last_commit
-  %td.last_committer ADD LAST COMMITTER
+  %td.last_commiter= build.last_commiter.email
   %td.action= link_to('Delete', build_path(build.id), :method => :delete)
