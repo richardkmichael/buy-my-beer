@@ -26,8 +26,14 @@ class ProjectsController < ApplicationController
 
   def show
     begin
-      # @project = Project.includes(:builds).find(params[:id])
-      @project = Project.find(params[:id])
+      # @project = Project.find(params[:id])
+      @project = Project.includes(:builds).find(params[:id])
+
+      # TODO: Q: How to eager load the User/commiter data on the builds?
+      # TODO:    This is looking for Project.last_commiter.
+      # @project = Project.includes(:builds).includes(:last_commiter).find(params[:id])
+      # @builds = @project.builds.includes(:last_commiter)
+      @builds = Build.includes(:last_commiter).find_all_by_id(@project.id)
 
       # if @project
       #   render @project

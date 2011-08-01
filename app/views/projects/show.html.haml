@@ -13,3 +13,13 @@
   = @project.users.map{|u| u.email}
 
 .builds
+  %table.builds{:border => '1'}
+    %tr
+      %th Status
+      %th Last Commit
+      %th Last Committer
+      %th Action
+    -# = render :partial => 'builds/build', :collection => @project.builds
+    = render :partial => 'builds/build', :collection => @builds
+
+  = 'This project has no builds!' if @project.builds.empty?

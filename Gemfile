@@ -29,4 +29,5 @@ gem 'turn', :require => false, :group => :test
 group :development, :test do
   gem 'sqlite3'
   gem 'minitest-rails'
+  gem 'cucumber-rails'
 end
