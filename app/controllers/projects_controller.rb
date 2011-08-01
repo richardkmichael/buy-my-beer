@@ -3,7 +3,6 @@ class ProjectsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    # Eager load users to prevent the _project.html.haml view from querying.
     @projects = current_user.projects.includes(:users)
   end
 
@@ -26,14 +25,7 @@ class ProjectsController < ApplicationController
 
   def show
     begin
-      # @project = Project.find(params[:id])
-      @project = Project.includes(:builds).find(params[:id])
-
-      # TODO: Q: How to eager load the User/commiter data on the builds?
-      # TODO:    This is looking for Project.last_commiter.
-      # @project = Project.includes(:builds).includes(:last_commiter).find(params[:id])
-      # @builds = @project.builds.includes(:last_commiter)
-      @builds = Build.includes(:last_commiter).find_all_by_id(@project.id)
+      @project = Project.includes(:builds => :last_commiter).find(params[:id])
 
       # if @project
       #   render @project

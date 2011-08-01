@@ -16,7 +16,6 @@ ActiveRecord::Schema.define(:version => 20110726100403) do
     t.string   "name"
     t.boolean  "status"
     t.string   "last_commit"
-    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "project_id"

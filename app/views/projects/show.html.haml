@@ -19,7 +19,6 @@
       %th Last Commit
       %th Last Committer
       %th Action
-    -# = render :partial => 'builds/build', :collection => @project.builds
-    = render :partial => 'builds/build', :collection => @builds
+    = render :partial => 'builds/build', :collection => @project.builds
 
   = 'This project has no builds!' if @project.builds.empty?
