@@ -1,13 +1,10 @@
 class Project < ActiveRecord::Base
 
-  # TODO: Q: How to insure :url is read only?  Undefine url=() ?
-  # TODO: Do we need this?  There's no mass-assignment on these ; is there?
-  attr_accessible :name, :url
-
   # TODO: Q: Other name validations?  What matters? length?
   validates :name, :presence => true
 
   # TODO: Q: This validator breaks.  Why?
+  # TODO: Q: How to make the URL attribute read-only?
   # validates :url, :uniqueness => true
 
   validates :users, :presence => true
