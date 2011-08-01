@@ -1,11 +1,11 @@
 require "minitest_helper"
 
-class ProjectHelperTest < MiniTest::Rails::Helper
-  before do
-    @helper= ProjectHelper.new
-  end
+class ProjectsHelperTest < MiniTest::Rails::Helper
+  # before do
+  #   @helper= ProjectsHelper.new
+  # end
 
-  it "must be a real test" do
-    flunk "Need real tests"
-  end
+  # it "must be a real test" do
+  #   flunk "Need real tests"
+  # end
 end
