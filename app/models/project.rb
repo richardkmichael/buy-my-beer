@@ -1,7 +1,5 @@
 class Project < ActiveRecord::Base
 
-  # validates :uuid, :uniqueness => true
-
   validates :name, :presence => true
 
   validates :users, :presence => true
@@ -11,6 +9,10 @@ class Project < ActiveRecord::Base
 
   has_many :builds, :dependent => :destroy
 
+  # This is not the Rails Way(tm).  Except I don't like binding model
+  # logic to persistence with hooks. :/
+  # TODO: Possibly fix with after_initialize() ; if new? ... ; end
+  #       See the Rails 3 Way, page 308.  It's called after each DB load. :/
   def initialize(attributes = nil, options = {})
     super(attributes, options)
     self[:uuid] = generate_uuid

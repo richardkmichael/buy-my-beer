@@ -8,8 +8,21 @@ class BuildsController < ApplicationController
 
       @build.project = Project.find_by_uuid(params[:uuid])
 
+      # TODO: This is weird.  We've received last_commiter as an
+      #       email address but we need it as a User object.
+      # TODO: password = User.send(:generate_token, 'encrypted_password')
+      @build.last_commiter = User.find_by_email(params[:last_commiter]) ||
+                             User.new( :email => params[:last_commiter],
+                                       :password => '*LOCKED*' )
+
       if @build.valid?
+
+        # TODO: This belongs in model logic as a save hook / observer.
+        # Failed builds cost a beer.
+        @build.last_commiter.beers += 1 unless @build.status == true
+
         @build.save
+
         render :json => @build.to_json, :status => 200
       else
         render :json => "Invalid build! #{@build.to_json} => #{@build.errors.full_messages}", :status => 400

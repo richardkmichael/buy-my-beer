@@ -10,7 +10,7 @@
 
   .header
     - if current_user
-      %h2= "#{current_user.email} (id: #{current_user.id})"
+      %h2= "#{current_user.email} (id: #{current_user.id}), owing: #{current_user.beers} beers!"
 
   .flash
     -flash.each do |key, value|

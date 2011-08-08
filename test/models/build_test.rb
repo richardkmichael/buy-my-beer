@@ -3,7 +3,12 @@ require "minitest_helper"
 class BuildTest < MiniTest::Rails::Model
 
   before do
-    @user          =  User.new(:email => 'testuser@example.com', :password => 'password')
+    DatabaseCleaner.start
+
+    @user =  User.new(:email    => 'testuser@example.com',
+                      :password => 'password',
+                      :beers    => 0)
+
     @project       =  Project.new(:name => 'Test Project')
     @project.users << @user
 
@@ -12,7 +17,10 @@ class BuildTest < MiniTest::Rails::Model
                        :last_commiter => @user,
                        :status        => true,
                        :project       => @project)
+  end
 
+  after do
+    DatabaseCleaner.clean
   end
 
   it 'must belong to a project' do
@@ -29,6 +37,13 @@ class BuildTest < MiniTest::Rails::Model
 
   it 'must have a status which is true or false' do
     assert @build.status
+  end
+
+  it 'must charge one beer to the last commiter when saved and the build failed' do
+    assert_equal 0, @build.last_commiter.beers
+    @build.status = false
+    @build.save
+    assert_equal 1, @build.last_commiter.beers
   end
 
 end
