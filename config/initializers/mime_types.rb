@@ -1,5 +1,4 @@
-# Be sure to restart your server when you modify this file.
+# Be sure to restart your server when you modify this file, even in development mode.
 
-# Add new mime types for use in respond_to blocks:
-# Mime::Type.register "text/richtext", :rtf
-# Mime::Type.register_alias "text/html", :iphone
+# TODO: Why can't I register more than 1 mime type against :json?  See: "rails c" warning.
+Mime::Type.register 'application/vnd.build-v1+json', :json

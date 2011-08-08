@@ -1,5 +1,7 @@
 # TODO: Q: What about "after do ; @project.save ; end' to be sure the record always saves?
 #          This would slow down the testsuite.
+#
+# To wrap each test, see def setup() ; end ; def teardown() ; end.
 
 require "minitest_helper"
 
@@ -18,13 +20,13 @@ class ProjectTest < MiniTest::Rails::Model
     refute_empty @project.name, 'The project has no name.'
   end
 
-  it 'should have an auto-generated url' do
-    # In fact, we want the URL to be unique.. how to test that?
+  it 'should have an auto-generated uuid' do
+    # In fact, we want the UUID to be unique.. how test to ensure that?
     # Should we be testing the algorithm too?  Or just that it's != null
 
     # A few ways to do this with Minitest's assertions/expectations
-    # @project.url.wont_be_empty
-    refute_empty @project.url, 'The project has no URL.'
+    # @project.uuid.wont_be_empty
+    refute_empty @project.uuid, 'The project has no UUID.'
   end
 
   # Really?
@@ -73,11 +75,11 @@ class ProjectTest < MiniTest::Rails::Model
   # -----------------------------------------
 
 
-  # it 'must have a unique url' do
-  #   # TODO: A uniqueness test on the URL.
-  #   # create a Project with a known URL -> use chronic to stick Time.now?  but
+  # it 'must have a unique uuid' do
+  #   # TODO: A uniqueness test on the UUID.
+  #   # create a Project with a known UUID -> use chronic to stick Time.now?  but
   #   # that's Project implementation specific.  it would be nice to hijack the
-  #   # object and change the random URL generate.
+  #   # object and change the random UUID generate.
   # end
 
 end

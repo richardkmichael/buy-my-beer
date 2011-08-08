@@ -31,9 +31,9 @@ ActiveRecord::Schema.define(:version => 20110726100403) do
 
   create_table "projects", :force => true do |t|
     t.string   "name"
+    t.string   "uuid",       :limit => 64
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "url"
   end
 
   create_table "users", :force => true do |t|

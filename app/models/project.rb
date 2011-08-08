@@ -4,8 +4,8 @@ class Project < ActiveRecord::Base
   validates :name, :presence => true
 
   # TODO: Q: This validator breaks.  Why?
-  # TODO: Q: How to make the URL attribute read-only?
-  # validates :url, :uniqueness => true
+  # TODO: Q: How to make the UUID attribute read-only?
+  # validates :uuid, :uniqueness => true
 
   validates :users, :presence => true
 
@@ -16,14 +16,14 @@ class Project < ActiveRecord::Base
 
   def initialize(attributes = nil, options = {})
     super(attributes, options)
-    self[:url] = generate_random_url
+    self[:uuid] = generate_uuid
   end
 
   private
 
-  # Generate a unique URL from the current time and a random number.
+  # Generate a UUID from the current time and a random number.
   # Assumes we don't have > 1,000,000 requests per second.
-  def generate_random_url
+  def generate_uuid
     Digest::SHA2.hexdigest("#{Time.now.utc}--#{rand(1000000)}")
   end
 
