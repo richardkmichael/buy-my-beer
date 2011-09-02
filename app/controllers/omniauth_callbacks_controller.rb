@@ -1,7 +1,5 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
-  # FIXME: A straight copy from the Devise example.
-  # TODO: Q: What re the devise provided methods and events?  How to use them?
   def github
     @user = User.find_for_github_oauth(env['omniauth.auth'], current_user)
 

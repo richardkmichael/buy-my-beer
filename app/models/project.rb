@@ -1,11 +1,8 @@
 class Project < ActiveRecord::Base
 
-  # TODO: Q: Other name validations?  What matters? length?
-  validates :name, :presence => true
-
-  # TODO: Q: This validator breaks.  Why?
-  # TODO: Q: How to make the UUID attribute read-only?
   # validates :uuid, :uniqueness => true
+
+  validates :name, :presence => true
 
   validates :users, :presence => true
 
