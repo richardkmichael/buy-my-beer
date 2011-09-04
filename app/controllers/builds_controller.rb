@@ -8,9 +8,6 @@ class BuildsController < ApplicationController
 
       @build.project = Project.find_by_uuid(params[:uuid])
 
-      # TODO: This is weird.  We've received last_commiter as an
-      #       email address but we need it as a User object.
-      # TODO: password = User.send(:generate_token, 'encrypted_password')
       @build.last_commiter = User.find_by_email(params[:last_commiter]) ||
                              User.new( :email => params[:last_commiter],
                                        :password => '*LOCKED*' )

@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 # Core
 gem 'rails', '3.1'
-gem 'pg'  # Heroku. Do they override config/database.yml?
+gem 'pg'  # For Heroku. Do they override config/database.yml?
 
 # Asset template engines
 gem 'jquery-rails'
@@ -18,7 +18,7 @@ gem 'omniauth'
 # Deployment
 gem 'heroku'
 
-# Development and test only.
+# Development only.
 gem 'rails-footnotes', '>= 3.7', :group => :development
 
 # Continue using sqlite3 in development and test for now.
