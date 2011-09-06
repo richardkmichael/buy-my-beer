@@ -1,13 +1,20 @@
-# To wrap each test, see def setup() ; end ; def teardown() ; end.
+require 'minitest_helper'
 
-require "minitest_helper"
-
+# MiniTest::Rails::Model < MiniTest::Rails:Spec < ::MiniTest::Spec
 class ProjectTest < MiniTest::Rails::Model
 
   before do
-    @user          = User.new(:email => 'user@example.com',:password => 'password')
-    @project       = Project.new(:name => 'Test Project')
+    DatabaseCleaner.start
+
+    @user = Factory.build(:user,
+                          :email => 'testuser@example.com')
+
+    @project       = Factory.build(:project)
     @project.users << @user
+  end
+
+  after do
+    DatabaseCleaner.clean
   end
 
   it 'must have a name' do
@@ -21,7 +28,6 @@ class ProjectTest < MiniTest::Rails::Model
   end
 
   it 'must have a user' do
-    @project.users << @user
     refute_empty @project.users, 'The project has no users.'
   end
 

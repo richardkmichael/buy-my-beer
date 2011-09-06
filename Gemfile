@@ -36,4 +36,5 @@ group :test do
   gem 'growl_notify'
   gem 'rb-fsevent'
   gem 'database_cleaner'
+  gem 'factory_girl_rails'
 end

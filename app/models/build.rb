@@ -13,7 +13,6 @@ class Build < ActiveRecord::Base
 
   validates :last_commiter, :presence => true
   belongs_to :last_commiter, :class_name => 'User'
-             # :autosave => true # Except we don't want to re-save existing records. :/
 
   scope :passed, where(:status => true)
   scope :failed, where(:status => false)

@@ -1,22 +1,20 @@
-require "minitest_helper"
+require 'minitest_helper'
 
 class BuildTest < MiniTest::Rails::Model
 
   before do
     DatabaseCleaner.start
 
-    @user =  User.new(:email    => 'testuser@example.com',
-                      :password => 'password',
-                      :beers    => 0)
+    @user = Factory.build(:user,
+                          :email => 'testuser@example.com')
 
-    @project       =  Project.new(:name => 'Test Project')
+    @project       =  Factory.build(:project)
     @project.users << @user
 
-    @build = Build.new(:name          => 'Test Suite Build',
-                       :last_commit   => '000000',
-                       :last_commiter => @user,
-                       :status        => true,
-                       :project       => @project)
+    @build = Factory.build(:build,
+                           :last_commiter => @user,
+                           :last_commit   => '000000',
+                           :project       => @project)
   end
 
   after do
