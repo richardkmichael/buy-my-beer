@@ -1,3 +1,6 @@
+# Build specially named factories?  :successful_build, etc.?
+# Inherited factories or callbacks might handle the nested factories.
+
 Factory.define(:user) do |u|
   u.sequence(:email) { |n| "test-email-#{n}@example.com" }
   u.password "testpass"
