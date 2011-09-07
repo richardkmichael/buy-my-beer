@@ -18,8 +18,7 @@ FactoryGirl.define do
     users { FactoryGirl.build_list(:user, 1) }
     sequence(:name) { |n| "Test Project #{n}" }
 
-    # Here, we want to pass *this* project for the association,
-    # not have the build Factory create a new one. :/
+    # This factory is broken.  It will create two projects (the build itself will create a second one.)
     factory :project_with_build do
       builds { FactoryGirl.build_list(:build, 1) }
     end

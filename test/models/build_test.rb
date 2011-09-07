@@ -27,6 +27,14 @@ class BuildTest < MiniTest::Rails::Model
     it 'must have a status which is true or false' do
       assert [ true, false ].include? @build.status
     end
+
+    it 'must create a new user if the last commiter is not already a user' do
+      assert false
+    end
+
+    it 'must add the last commiter as a collaborator on the project' do
+      assert false
+    end
   end
 
   # Tests involve persistence, and need different setup and teardown.

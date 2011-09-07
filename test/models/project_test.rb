@@ -26,19 +26,21 @@ class ProjectTest < MiniTest::Rails::Model
   describe 'delete behaviour' do
     before do
       DatabaseCleaner.start
-      @project = Factory.create(:project_with_build)
+
+      # @build = Factory.create(:build)
+      # @project = @build.project
+
+      @project = Factory.create(:project)
     end
 
     after do
       DatabaseCleaner.clean
     end
 
-    # FIXME: Factory(:build) is creating an extra project.
+    # We need another test for projects which have builds (more collaborators).
     it 'should delete collaborations when deleted' do
-      Collaboration.all.each { |c| puts "Collab 1: #{c.user.email}, #{c.project.name}" }
-      assert @project.collaborations, 'Project collaborators were not created.'
+      assert_equal(1, Collaboration.all.count, 'Project collaborators were not created.')
       @project.destroy
-      Collaboration.all.each { |c| puts "Collab 2: #{c.user.email}, #{c.project.name}" }
       assert_equal(0, Collaboration.all.count, 'Project collaborators were not destroyed.')
     end
 
