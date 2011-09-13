@@ -5,7 +5,7 @@ class BuildsControllerTest < MiniTest::Rails::Controller
   #   @controller = BuildsController.new
   # end
 
-  # it "must be a real test" do
-  #   flunk "Need real tests"
+  # it 'must create a new user if the last commiter is not already a user' do
+  #   assert false
   # end
 end

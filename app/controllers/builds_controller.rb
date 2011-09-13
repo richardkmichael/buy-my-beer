@@ -13,13 +13,7 @@ class BuildsController < ApplicationController
                                        :password => '*LOCKED*' )
 
       if @build.valid?
-
-        # TODO: This belongs in model logic as a save hook / observer.
-        # Failed builds cost a beer.
-        @build.last_commiter.beers += 1 unless @build.status == true
-
         @build.save
-
         render :json => @build.to_json, :status => 200
       else
         render :json => "Invalid build! #{@build.to_json} => #{@build.errors.full_messages}", :status => 400
