@@ -21,7 +21,6 @@ class ProjectTest < MiniTest::Rails::Model
     end
   end
 
-
   # Tests involve persistence, and need different setup and teardown.
   describe 'delete behaviour' do
     before do
@@ -38,10 +37,12 @@ class ProjectTest < MiniTest::Rails::Model
     end
 
     # We need another test for projects which have builds (more collaborators).
-    it 'should delete collaborations when deleted' do
-      assert_equal(1, Collaboration.all.count, 'Project collaborators were not created.')
+    it 'should delete the project owner as a collaborator when deleted' do
+      total_collaborations = Collaboration.all.count
+
+      assert_equal 1, @project.users.count, 'Project collaborators were not created.'
       @project.destroy
-      assert_equal(0, Collaboration.all.count, 'Project collaborators were not destroyed.')
+      assert_equal total_collaborations - 1, Collaboration.all.count, 'Project collaborators were not destroyed.'
     end
 
     it 'should not delete users when deleted' do
