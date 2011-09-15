@@ -24,15 +24,17 @@ gem 'rails-footnotes', '>= 3.7', :group => :development
 # Continue using sqlite3 in development and test for now.
 group :development, :test do
   gem 'sqlite3'
-  gem 'minitest-rails'
   gem 'minitest'
+  gem 'guard-minitest'
+  gem 'mini_specunit'
   gem 'cucumber-rails'
+  gem 'pry'
+  gem 'gist'
 end
 
 group :test do
   gem 'turn', :require => false
   gem 'capybara'
-  gem 'guard-minitest'
   gem 'growl_notify'
   gem 'rb-fsevent'
   gem 'database_cleaner'

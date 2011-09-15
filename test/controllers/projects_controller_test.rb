@@ -12,9 +12,21 @@
 #
 require "minitest_helper"
 
+require 'action_controller'
+
+# < MiniTest::Rails::Spec
+#  include ActionController::TestCase::Behaviour
+# < ::MiniTest::Spec
+# < ::MiniTest::Unit::TestCase
 class ProjectsControllerTest < MiniTest::Rails::Controller
 
-  before do
+
+  include ActionController::TestCase::Behavior
+
+  # before do
+  #   @controller = ProjectsController.new
+  # end
+  def setup
     @controller = ProjectsController.new
   end
 
