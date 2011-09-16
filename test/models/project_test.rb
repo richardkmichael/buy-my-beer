@@ -1,7 +1,5 @@
-#require 'minitest_helper'
 require 'test_helper'
 
-# MiniTest::Rails::Model < MiniTest::Rails:Spec < ::MiniTest::Spec
 # class ProjectTest < MiniTest::Rails::Model
 class ProjectTest < ActiveSupport::TestCase
 
@@ -11,8 +9,6 @@ class ProjectTest < ActiveSupport::TestCase
     end
 
     it 'must have a name' do
-      puts 'Inside ProjectTest, in project_test.rb'
-
       refute_empty @project.name, 'A project must have a name.'
     end
 

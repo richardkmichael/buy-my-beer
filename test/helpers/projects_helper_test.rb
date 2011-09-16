@@ -1,8 +1,8 @@
 # require "minitest_helper"
 
-# class BuildsHelperTest < MiniTest::Rails::Helper
+# class ProjectsHelperTest < MiniTest::Rails::Helper
 #   # before do
-#   #   @helper= BuildsHelper.new
+#   #   @helper= ProjectsHelper.new
 #   # end
 
 #   # it "must be a real test" do

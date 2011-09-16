@@ -1,6 +1,7 @@
-require 'minitest_helper'
+require 'test_helper'
 
-class BuildTest < MiniTest::Rails::Model
+# class BuildTest < MiniTest::Rails::Model
+class BuildTest < ActiveSupport::TestCase
 
   describe 'creation behaviour' do
     before do

@@ -10,28 +10,19 @@
 #   get, post, put, head, delete
 #   assigns, cookies, flash, session
 #
-require "minitest_helper"
+require "test_helper"
 
-require 'action_controller'
+# class ProjectsControllerTest < MiniTest::Rails::Controller
+class ProjectsControllerTest < ActionController::TestCase
 
-# < MiniTest::Rails::Spec
-#  include ActionController::TestCase::Behaviour
-# < ::MiniTest::Spec
-# < ::MiniTest::Unit::TestCase
-class ProjectsControllerTest < MiniTest::Rails::Controller
-
-
-  include ActionController::TestCase::Behavior
-
-  # before do
-  #   @controller = ProjectsController.new
-  # end
-  def setup
+  before do
+    puts 'In before block.'
     @controller = ProjectsController.new
   end
 
   it 'must require authentication' do
-     # How to test all authentication flavours?
+    # How to test all authentication flavours?
+    refute_nil @project
   end
 
   it 'must accept GitHub credentials' do
