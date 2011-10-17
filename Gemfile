@@ -26,7 +26,6 @@ group :development, :test do
   gem 'sqlite3'
   gem 'minitest'
   gem 'guard-minitest'
-  gem 'mini_specunit'
   gem 'cucumber-rails'
   gem 'pry'
   gem 'gist'
