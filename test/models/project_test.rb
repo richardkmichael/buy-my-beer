@@ -1,58 +1,47 @@
 require 'test_helper'
 
-# class ProjectTest < MiniTest::Rails::Model
 class ProjectTest < ActiveSupport::TestCase
 
-  describe 'creation behaviour' do
-    before do
-      @project = Factory.build(:project)
-    end
+  def setup
+    DatabaseCleaner.start
 
-    it 'must have a name' do
-      refute_empty @project.name, 'A project must have a name.'
-    end
-
-    it 'should have an auto-generated uuid' do
-      refute_empty @project.uuid, 'A project must auto-generate a UUID.'
-    end
-
-    it 'must have a user' do
-      refute_empty @project.users, 'A project must have at least one user.'
-    end
+    # @build = Factory.create(:build)
+    # @project = @build.project
+    @project = Factory.create(:project)
   end
 
-  # Tests involve persistence, and need different setup and teardown.
-  describe 'delete behaviour' do
-    before do
-      DatabaseCleaner.start
+  def teardown
+    DatabaseCleaner.clean
+  end
 
-      # @build = Factory.create(:build)
-      # @project = @build.project
+  test 'must have a name' do
+    refute_empty @project.name, 'A project must have a name.'
+  end
 
-      @project = Factory.create(:project)
-    end
+  test 'should have an auto-generated uuid' do
+    refute_empty @project.uuid, 'A project must auto-generate a UUID.'
+  end
 
-    after do
-      DatabaseCleaner.clean
-    end
+  test 'must have a user' do
+    refute_empty @project.users, 'A project must have at least one user.'
+  end
 
-    # We need another test for projects which have builds (more collaborators).
-    it 'should delete the project owner as a collaborator when deleted' do
-      total_collaborations = Collaboration.all.count
+  # We need another test for projects which have builds (more collaborators).
+  test 'should delete the project owner as a collaborator when deleted' do
+    total_collaborations = Collaboration.all.count
 
-      assert_equal 1, @project.users.count, 'Project collaborators were not created.'
-      @project.destroy
-      assert_equal total_collaborations - 1, Collaboration.all.count, 'Project collaborators were not destroyed.'
-    end
+    assert_equal 1, @project.users.count, 'Project collaborators were not created.'
+    @project.destroy
+    assert_equal total_collaborations - 1, Collaboration.all.count, 'Project collaborators were not destroyed.'
+  end
 
-    it 'should not delete users when deleted' do
-      @project.destroy
-      assert User.find(@project.users.first)
-    end
+  test 'should not delete users when deleted' do
+    @project.destroy
+    assert User.find(@project.users.first)
+  end
 
-    it 'should delete builds when deleted' do
-      assert true
-    end
+  test 'should delete builds when deleted' do
+    assert true
   end
 
 end

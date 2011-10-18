@@ -1,58 +1,50 @@
 require 'test_helper'
 
-# class BuildTest < MiniTest::Rails::Model
 class BuildTest < ActiveSupport::TestCase
 
-  describe 'creation behaviour' do
-    before do
-      @user = Factory.build(:user,
-                            :email => 'testuser@example.com')
+  def setup
+    DatabaseCleaner.start
 
-      @build = Factory.build(:build,
-                             :last_commiter => @user,
-                             :last_commit   => '000000')
-    end
+    @user = Factory.build(:user,
+                          :email => 'testuser@example.com')
 
-    it 'must belong to a project' do
-      assert @build.project, 'A build must belong to a project.'
-    end
+    @build = Factory.build(:build,
+                           :last_commiter => @user,
+                           :last_commit   => '000000')
 
-    it 'must have a last commit' do
-      assert_equal '000000', @build.last_commit, 'A build must have a last commit.'
-    end
-
-    it 'must belong to the last commiter' do
-      assert_equal 'testuser@example.com', @build.last_commiter.email, 'A build must belong to the last commiter.'
-    end
-
-    it 'must have a status which is true or false' do
-      assert [ true, false ].include? @build.status
-    end
-
+    @failed_build = Factory.build(:failed_build)
   end
 
-  # Tests involve persistence, and need different setup and teardown.
-  describe 'model callbacks' do
-    before do
-      DatabaseCleaner.start
-      @build = Factory.build(:failed_build)
-    end
+  def teardown
+    DatabaseCleaner.clean
+  end
 
-    after do
-      DatabaseCleaner.clean
-    end
+  test 'must belong to a project' do
+    assert @build.project, 'A build must belong to a project.'
+  end
 
-    it 'must charge one beer to the last commiter of a failed build' do
-      assert_equal 0, @build.last_commiter.beers
-      @build.save
-      assert_equal 1, @build.last_commiter.beers
-    end
+  test 'must have a last commit' do
+    assert_equal '000000', @build.last_commit, 'A build must have a last commit.'
+  end
 
-    it 'must add the last commiter as a collaborator on the project' do
-      assert_equal 1, @build.project.users.count
-      @build.save
-      assert_equal 2, @build.project.users.count
-    end
+  test 'must belong to the last commiter' do
+    assert_equal 'testuser@example.com', @build.last_commiter.email, 'A build must belong to the last commiter.'
+  end
+
+  test 'must have a status which is true or false' do
+    assert [ true, false ].include? @build.status
+  end
+
+  test 'must charge one beer to the last commiter of a failed build' do
+    assert_equal 0, @failed_build.last_commiter.beers
+    @failed_build.save
+    assert_equal 1, @failed_build.last_commiter.beers
+  end
+
+  test 'must add the last commiter as a collaborator on the project' do
+    assert_equal 1, @failed_build.project.users.count
+    @failed_build.save
+    assert_equal 2, @failed_build.project.users.count
   end
 
 end

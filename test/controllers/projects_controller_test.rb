@@ -16,9 +16,15 @@ class ProjectsControllerTest < ActionController::TestCase
 
   include Devise::TestHelpers
 
-  # before do
+  def setup
+    @request.env['devise.mapping'] = Devise.mappings[:user]
+    sign_in Factory.create(:user)
+  end
 
-  # end
+  test 'respond to get' do
+    get :index
+    assert_response :success
+  end
 
   # it 'must require authentication' do
   #   # How to test all authentication flavours?
@@ -37,22 +43,16 @@ class ProjectsControllerTest < ActionController::TestCase
   #
   # end
 
-  test 'respond to get' do
-    get :index
-    assert_response :success
-  end
-
-  test 'setup specific template variables' do
-    get :index
-    assert_response :success
-    # assert_not_nil assigns(@user)
-  end
+  # test 'setup specific template variables' do
+  #   get :index
+  #   assert_not_nil assigns(@user)
+  # end
 
   # it 'must create a project' do
   #   assert_difference(Project.count) do
   #     post :create, :project => { :name => 'A test project' }
   #   end
-
+  #
   #   # How does this work?
   #   assert_redirected_to project_path(assigns(:project))
   #   # assert_redirected_to project_path(@project)
