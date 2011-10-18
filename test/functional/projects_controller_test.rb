@@ -17,55 +17,45 @@ class ProjectsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   def setup
-    DatabaseCleaner.start
     @request.env['devise.mapping'] = Devise.mappings[:user]
-    sign_in Factory.create :user
+    sign_in Factory.create(:user)
   end
 
-  def teardown
-    DatabaseCleaner.clean
-  end
-
-  test 'it must show projects on the index page' do
+  test 'respond to get' do
     get :index
     assert_response :success
-    assert_not_nil assigns(:projects)
   end
 
-  test 'it must find a specific project' do
-    project = Factory.create :project, :name => 'Show test project'
+  # it 'must require authentication' do
+  #   # How to test all authentication flavours?
+  #   refute_nil @project
+  # end
 
-    get :show, :id => project.id
-    assert_response :success
-    assert_not_nil assigns(:project)
-  end
-
-  test 'it must prepare an empty project form' do
-    get :new
-    assert_response :success
-    assert_not_nil assigns(:project)
-  end
-
-  test 'it must create a project and redirect to the index page' do
-    assert_difference 'Project.count' do
-      post :create, :project => { :name => 'Create test project' }
-    end
-    assert_redirected_to root_path
-  end
-
-  test 'it must delete a project and redirect to the index page' do
-    project = Factory.create :project, :name => 'Destroy test project'
-
-    assert_difference 'Project.count', -1 do
-      post :destroy, :id => project.id
-    end
-    assert_redirected_to root_path
-  end
-
-  # This is probably an integration test.  The controller shouldn't care if the
-  # data arrives as JSON or POST URL encoded parameters
-  # test 'it must create a project by JSON' do
+  # it 'must accept GitHub credentials' do
   #
+  # end
+
+  # it 'must accept local credentials' do
+  #
+  # end
+
+  # it 'must respond to delete' do
+  #
+  # end
+
+  # test 'setup specific template variables' do
+  #   get :index
+  #   assert_not_nil assigns(@user)
+  # end
+
+  # it 'must create a project' do
+  #   assert_difference(Project.count) do
+  #     post :create, :project => { :name => 'A test project' }
+  #   end
+  #
+  #   # How does this work?
+  #   assert_redirected_to project_path(assigns(:project))
+  #   # assert_redirected_to project_path(@project)
   # end
 
 end
