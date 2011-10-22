@@ -1,3 +1,5 @@
+require 'factory_girl'
+
 FactoryGirl.define do
 
   sequence :commit do |n|
