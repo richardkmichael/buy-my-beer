@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
 
-  attr_accessible :email, :beers, :password, :password_confirmation, :remember_me
+  validates :beers, :presence     => true,
+                    :numericality => { :only_integer => true,
+                                       :greater_than_or_equal_to => 0 }
 
   has_many :collaborations
   has_many :projects, :through => :collaborations

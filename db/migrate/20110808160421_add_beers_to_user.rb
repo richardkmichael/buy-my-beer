@@ -1,5 +1,5 @@
 class AddBeersToUser < ActiveRecord::Migration
   def change
-    add_column :users, :beers, :integer
+    add_column :users, :beers, :integer, :default => 0
   end
 end
