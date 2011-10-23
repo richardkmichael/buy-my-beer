@@ -7,7 +7,8 @@ class Build < ActiveRecord::Base
   #      nil is not a FALSE value.  This is effectively :presence => true.
   validates :status, :inclusion => { :in => [true, false] }
 
-  validates :last_commit, :presence => true
+  # Git SHA1 only.
+  validates :last_commit, :format => /[a-z0-9]{40}/i
 
   validates :project, :presence => true
   belongs_to :project
