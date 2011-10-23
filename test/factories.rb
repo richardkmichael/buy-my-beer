@@ -16,6 +16,7 @@ FactoryGirl.define do
     beers 0
   end
 
+  # Create a project with an owning user.
   factory :project do
     users { FactoryGirl.build_list(:user, 1) }
     sequence(:name) { |n| "Test Project #{n}" }
@@ -26,6 +27,9 @@ FactoryGirl.define do
     end
   end
 
+  # Create a build with a commit, last committer and belonging to a project
+  # (project factory has an owning user).  Thus, this factory creates two
+  # users.
   factory :build do
 
     project
@@ -37,6 +41,7 @@ FactoryGirl.define do
       status false
     end
   end
+
 end
 
 
