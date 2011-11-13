@@ -12,30 +12,28 @@ gem 'coffee-rails'
 gem 'uglifier'
 
 # Authentication
-gem 'devise'
+gem 'devise', '1.5.0.rc1'
 gem 'omniauth'
+gem 'omniauth-github'
 
 # Deployment
 gem 'heroku'
 
 # Development only.
-gem 'rails-footnotes', '>= 3.7', :group => :development
-
-# Continue using sqlite3 in development and test for now.
-group :development, :test do
-  gem 'sqlite3'
-  gem 'minitest'
-  gem 'guard-minitest'
-  gem 'cucumber-rails'
+group :development do
+  gem 'rails-footnotes'
+  gem 'growl_notify'
   gem 'pry'
   gem 'gist'
 end
 
-group :test do
-  gem 'turn', :require => false
-  gem 'capybara'
-  gem 'growl_notify'
+# Development and test.
+group :development, :test do
   gem 'rb-fsevent'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
+  gem 'sqlite3'
+  gem 'minitest'
+  gem 'guard-minitest'
+  gem 'cucumber-rails'
 end
