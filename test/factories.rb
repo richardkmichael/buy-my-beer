@@ -13,6 +13,7 @@ FactoryGirl.define do
   factory :user, :aliases => [:last_commiter] do
     email { FactoryGirl.generate :email }
     password "testpass"
+    beers 0
   end
 
   # Create a project with an owning user.
