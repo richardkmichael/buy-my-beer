@@ -12,7 +12,7 @@ gem 'coffee-rails'
 gem 'uglifier'
 
 # Authentication
-gem 'devise', '1.5.0.rc1'
+gem 'devise'
 gem 'omniauth'
 gem 'omniauth-github'
 
