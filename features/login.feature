@@ -1,18 +1,22 @@
-# Feature: A user should be able to sign in *interactively* (?)
-Feature: A user should be able to sign in
+Feature: Sign up and login.
 
-  Scenario: A user who is not logged in should see a login form
-    When I am not logged in
-    And I visit '/'
-    Then I should see the login form
-
-  Scenario: A user who is logged in should not see a login form
-    When I am logged in
-    And I visit '/'
-    Then I should not see the login form
-
-  Scenario: A user should be able to log in
+  Scenario: I should be able to login on the home page.
     When I visit '/'
     And I am not logged in
     Then I should see the login form
-    And I should be able to log in
+
+  Scenario: A user who is logged in should not see a login form
+    When I visit '/'
+    And I am logged in
+    Then I should not see the login form
+
+  Scenario: A user without an account may log in.
+    When I login
+    And I do not have an account
+    Then I should be able to log in
+    And I am told I will receive a confirmation email
+
+  Scenario: A user with an existing account may log in.
+    When I login
+    And I do not have an account
+    Then I should be able to log in

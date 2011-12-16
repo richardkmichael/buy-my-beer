@@ -1,8 +1,10 @@
-- if @user
-  = "Welcome #{@user.email}"
-- else
-  Welcome, please sign in!
-  = form_for :user, :url => user_session_path  do |f|
+%h1 Welcome to Buy My Beer!
+
+- unless user_signed_in?
+
+  %h2  Please sign in!
+
+  = form_for User.new, :url => user_session_path  do |f|
     = f.label          :email, 'Email'
     = f.text_field     :email
     = f.label          :password, 'Password'
@@ -11,3 +13,17 @@
     = f.check_box :remember_me
     = f.submit 'Sign in'
     = link_to "Forgot your password?", new_password_path('user')
+
+-#  - unless user_signed_in?
+
+-#    Please sign in!
+
+-#    = form_tag user_session_path do
+-#      = label_tag :user_email, 'Email'
+-#      = text_field_tag 'user[email]'
+-#      = label_tag :password, 'Password'
+-#      = password_field_tag 'user[password]'
+-#      = check_box_tag 'user[remember_me]'
+-#      = label_tag 'user[remember_me]', 'Remember me'
+-#      = button_tag 'Sign in'
+-#      = link_to "Forgot your password?", new_password_path('user')
