@@ -18,5 +18,5 @@ Feature: Sign up and login.
 
   Scenario: A user with an existing account may log in.
     When I login
-    And I do not have an account
+    And I do have an account
     Then I should be able to log in

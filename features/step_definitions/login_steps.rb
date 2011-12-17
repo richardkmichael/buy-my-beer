@@ -6,22 +6,29 @@ When /^I am logged in$/ do
   @user = Factory :user
   assert_equal(1, User.count)
 
-  # This needs to write to the session ; having a user in the DB is not enough obviously.
+  visit '/users/sign_in'
+  fill_in 'Email',    :with => @user.email
+  fill_in 'Password', :with => @user.password
+  click_button 'Sign in'
+
+  # TODO: assert() something here
+
 end
 
 When /^I am not logged in$/ do
-  @user = nil
+  # There should be no users.
   assert_equal(0, User.count)
+
+  # If this is necessary, there has been state leakage; but ensure it.
+  visit '/users/sign_out'
+
+  # TODO: assert() something here
+
 end
 
-# Button 'commit' here is a strange name.
 Then /^I should be able to log in$/ do
 
-  # This step can be called following 'I am not logged in', which sets @user = nil.
-  # Honour @user, or provide defaults.
-  # @user.email    ||= 'testuser@localhost.localdomain'
-  # @user.password ||= 'test1234'
-
+  # If we have an existing Cucumber user, log in with it.
   if @user
     email    = @user.email
     password = @user.password
@@ -30,7 +37,7 @@ Then /^I should be able to log in$/ do
     password = 'test1234'
   end
 
-  # Need xpath values here, use the id attribute for now.
+  # TODO: xpath values here, use the id attribute for now.
   fill_in 'user_email',    :with => email
   fill_in 'user_password', :with => password
   click_button 'Sign in'

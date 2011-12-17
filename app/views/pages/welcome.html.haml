@@ -9,21 +9,7 @@
     = f.text_field     :email
     = f.label          :password, 'Password'
     = f.password_field :password
-    = f.label     :remember_me
-    = f.check_box :remember_me
-    = f.submit 'Sign in'
-    = link_to "Forgot your password?", new_password_path('user')
-
--#  - unless user_signed_in?
-
--#    Please sign in!
-
--#    = form_tag user_session_path do
--#      = label_tag :user_email, 'Email'
--#      = text_field_tag 'user[email]'
--#      = label_tag :password, 'Password'
--#      = password_field_tag 'user[password]'
--#      = check_box_tag 'user[remember_me]'
--#      = label_tag 'user[remember_me]', 'Remember me'
--#      = button_tag 'Sign in'
--#      = link_to "Forgot your password?", new_password_path('user')
+    = f.label          :remember_me
+    = f.check_box      :remember_me
+    = f.submit         'Sign in'
+    = link_to          'Forgot your password?', new_password_path('user')
