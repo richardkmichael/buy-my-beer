@@ -10,10 +10,9 @@ Feature: Login for all users.
     When I visit '/'
     Then I should not see the login form
 
-  Scenario: A user who has already logged in does not receive a notification.
+  Scenario: A user who has logged in previously does not receive a notification.
     Given I have logged in
     When I log out
-    # And I visit '/'
     And I log in again
     Then I should not be told 'An account has been created and confirmation email has been sent to you.'
 
