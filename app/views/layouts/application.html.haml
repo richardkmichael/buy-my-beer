@@ -2,8 +2,8 @@
 %html
 %head
   %title BuyMyBeer
-  = stylesheet_link_tag    "application"
-  = javascript_include_tag "application"
+  = stylesheet_link_tag    'application'
+  = javascript_include_tag 'application'
   = csrf_meta_tags
 
 %body
@@ -22,9 +22,12 @@
   -# TODO: Q: Devise is already doing this, how?
   -# = link_to 'Sign in with GitHub', user_omniauth_authorize_path(:github)
 
+  -# TODO: Seemingly not really required.  These helper method messages are in the flash too..
   -# Required for Devise ; as indicated by 'rails generate devise:install'.
-  %p.notice= notice
-  %p.alert= alert
+  -# %p.notice= notice
+  -# %p.alert= alert
 
-  = debug(params) if Rails.env.development?
-  = debug(session) if Rails.env.development?
+  - if Rails.env.development?
+    .debug{:style => 'border: solid red 2px; margin-top: 20px;'}
+      = debug(params)
+      = debug(session)
