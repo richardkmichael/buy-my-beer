@@ -20,5 +20,6 @@ BuyMyBeer::Application.routes.draw do
   devise_for :users, :controllers => {:omniauth_callbacks => 'omniauth_callbacks'}
 
   # Required for Devise ; as indicated by 'rails generate devise:install'.
-  root :to => 'pages#welcome'
+  # root :to => 'pages#welcome'
+  root :to => 'projects#index'
 end
