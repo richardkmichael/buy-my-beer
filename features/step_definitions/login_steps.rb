@@ -2,7 +2,8 @@
 #   - "I am (not) logged in.", "I should (not) see ...".
 #   - login_view_steps.rb ?
 
-When /^I am logged in$/ do
+When /^I have logged in$/ do
+
   @user = Factory :user
   assert_equal(1, User.count)
 
@@ -14,7 +15,7 @@ When /^I am logged in$/ do
   # TODO: assert() something here
 end
 
-When /^I am not logged in$/ do
+When /^I have not logged in$/ do
   # If this is necessary, there has been state leakage; but ensure it.
   visit '/users/sign_out'
 
