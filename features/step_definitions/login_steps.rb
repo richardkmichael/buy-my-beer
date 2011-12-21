@@ -1,10 +1,6 @@
-# Refactor for:
-#   - "I am (not) logged in.", "I should (not) see ...".
-#   - login_view_steps.rb ?
-
-When /^I have logged in$/ do
-
-  @user = Factory :user
+When /^I log in( again)?|I am logged in$/ do |again|
+  # If this step runs more than once per-scenario, don't create a second user.
+  @user ||= Factory :user
   assert_equal(1, User.count)
 
   visit '/users/sign_in'
@@ -12,38 +8,19 @@ When /^I have logged in$/ do
   fill_in 'Password', :with => @user.password
   click_button 'Sign in'
 
-  # TODO: assert() something here
+  # Refuting a magic string is bad, but devise gives back a 200 even on auth
+  # failure ; what else to assert or refute?
+  refute page.has_content?('Invalid username or password.'), 'Login should not have failed.'
 end
 
-When /^I have not logged in$/ do
+When /^I log out|I am not logged in$/ do
   # If this is necessary, there has been state leakage; but ensure it.
   visit '/users/sign_out'
 
   # TODO: assert() something here
 end
 
-Then /^I should be able to log in$/ do
-  # If we have an existing Cucumber user, log in with it.
-  if @user
-    email    = @user.email
-    password = @user.password
-  else
-    email    = 'testuser@localhost.localdomain'
-    password = 'test1234'
-  end
-
-  # TODO: xpath values here, use the id attribute for now.
-  fill_in 'user_email',    :with => email
-  fill_in 'user_password', :with => password
-  click_button 'Sign in'
-end
-
-Then /^I should see the login form$/ do
-  assert(page.has_field?('Email') && page.has_field?('Password'),
-    'Login form should be visible.')
-end
-
-Then /^I should not see the login form$/ do
-  refute(page.has_field?('Email') || page.has_field?('Password'),
-    'Login form should be missing.')
+Given /^I have never logged in/ do
+  # If no one has logged in, there should be no users.
+  assert_equal 0, User.count
 end
