@@ -1,11 +1,8 @@
-# Auth tests smell suspiciously like integration tests, just like JSON vs. URL
-# encoded form project creation in ProjectControllerTest.
-
 require 'test_helper'
 
 class ProjectsControllerAuthenticationTest < ActionController::TestCase
 
-  include Devise::TestHelpers
+  # include Devise::TestHelpers
 
   tests ProjectsController
 
@@ -25,11 +22,5 @@ class ProjectsControllerAuthenticationTest < ActionController::TestCase
     @request.env['devise.mapping'] = Devise.mappings[:user]
     sign_in Factory.create :user
   end
-
-  # ==========================
-  # # Mocking is required, because we can't store valid GH credentials here.
-  # test 'it must accept GitHub credentials' do
-  #
-  # end
 
 end
