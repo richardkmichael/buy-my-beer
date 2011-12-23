@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(email, password)
-    user = User.find_by_email(email)
+    user = find_by_email(email)
     if user and user.encrypted_password == user.has_password?(password)
       user
     else
@@ -44,12 +44,12 @@ class User < ActiveRecord::Base
 
   def encrypt_password
     # Called on every .save(), so don't generate a new salt if we have one.
-    self.salt =  make_salt if new_record? or not has_password?(password)
+    self.salt =  make_salt unless has_password?(password)
     self.encrypted_password = encrypt(self.password)
   end
 
   def encrypt(password)
-    secure_hash(self.salt + password)
+    secure_hash("#{self.salt}--#{password}")
   end
 
   def make_salt
