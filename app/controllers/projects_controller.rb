@@ -1,3 +1,4 @@
+# This controller does not have ApplicationHelper methods??
 class ProjectsController < ApplicationController
 
   # before_filter :authenticate_user!

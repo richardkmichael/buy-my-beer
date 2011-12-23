@@ -14,12 +14,9 @@ BuyMyBeer::Application.routes.draw do
   end
 
   # TODO: Q: Should we expose builds at all?
-  resources :projects, :builds
+  resources :projects, :builds, :users
 
-  # Devise authentication for the user routes.
-  devise_for :users, :controllers => {:omniauth_callbacks => 'omniauth_callbacks'}
+  match '/signup', :to => 'users#new'
 
-  # Required for Devise ; as indicated by 'rails generate devise:install'.
-  # root :to => 'pages#welcome'
   root :to => 'projects#index'
 end

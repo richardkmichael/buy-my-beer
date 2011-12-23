@@ -14,10 +14,10 @@ require 'test_helper'
 
 class ProjectsControllerTest < ActionController::TestCase
 
-  include Devise::TestHelpers
+  # include Devise::TestHelpers
 
   def setup
-    @request.env['devise.mapping'] = Devise.mappings[:user]
+    # @request.env['devise.mapping'] = Devise.mappings[:user]
     sign_in Factory.create(:user)
   end
 
