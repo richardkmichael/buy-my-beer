@@ -2,13 +2,8 @@ require 'factory_girl'
 
 FactoryGirl.define do
 
-  sequence :commit do |n|
-    Digest::SHA1.hexdigest "commit-#{n}"
-  end
-
-  sequence :email do |n|
-    "test-email-#{n}@example.com"
-  end
+  sequence(:commit) { |n| Digest::SHA1.hexdigest "commit-#{n}" }
+  sequence(:email)  { |n| "test-email-#{n}-#{rand(1000)}@example.com" }
 
   factory :user, :aliases => [:last_commiter] do
     email { FactoryGirl.generate :email }
