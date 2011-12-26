@@ -31,6 +31,7 @@ class UsersController < ApplicationController
         redirect_to user_path(@user)
       else
         flash[:notice] = 'Incorrect password.'
+        @user = User.new(:email => @user.email)
         render 'new'
       end
 
