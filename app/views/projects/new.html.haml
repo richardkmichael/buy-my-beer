@@ -1,6 +1,9 @@
 %h1 New Project
 
 = form_for @project do |f|
-  = f.label      :name, 'Name'
-  = f.text_field :name
-  = f.submit 'Save!'
+  .field
+    = f.label      :name, 'Name'
+    %br
+    = f.text_field :name
+  .action
+    = f.submit 'Create'

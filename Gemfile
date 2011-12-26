@@ -36,4 +36,5 @@ group :development, :test do
   gem 'minitest'
   gem 'guard-minitest'
   gem 'cucumber-rails'
+  gem 'awesome_print'
 end
