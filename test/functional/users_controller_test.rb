@@ -78,7 +78,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal 1, User.count
 
     assert_redirected_to user_path(assigns(:user))
-    assert_equal 'Your account has been created.', flash[:notice]
+    assert_equal 'Welcome back!', flash[:notice]
 
   end
 

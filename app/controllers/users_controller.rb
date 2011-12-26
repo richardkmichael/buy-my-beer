@@ -7,23 +7,33 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  # This action is actually doing auth too; ugh.  Needs a LoginController.
   def create
-    # Can we assume params[:user] is a hash?
-    @user = User.find_or_create_by_email(params[:user][:email], params[:user])
 
-    # Hum.. assume if it is not persisted, then there were errors?
-    if @user.persisted?
-      # This action is actually doing auth too; ugh.  Needs a LoginController.
-      if @user.has_password?(params[:password])
+    # Order matters, create a new user if find fails.
+    @user = User.find_by_email(params[:user][:email]) || User.new(params[:user])
+
+    if @user.new_record?
+
+      if @user.valid?
+        @user.save
         flash[:notice] = 'Your account has been created.'
         redirect_to user_path(@user)
       else
-        flash[:notice] = 'Bad password.'
+        flash[:notice] = 'There were errors creating your account.'
         render 'new'
       end
+
     else
-      flash[:notice] = 'There were errors creating your account.'
-      render 'new'
+
+      if @user.has_password?(params[:user][:password])
+        flash[:notice] = 'Welcome back!'
+        redirect_to user_path(@user)
+      else
+        flash[:notice] = 'Incorrect password.'
+        render 'new'
+      end
+
     end
   end
 
