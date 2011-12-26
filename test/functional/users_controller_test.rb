@@ -48,21 +48,7 @@ class UsersControllerTest < ActionController::TestCase
 
   end
 
-  test 'it must not create a new user given invalid attributes' do
-
-    post :create, :user => { :email => 'bad@email@address', :password => '' }
-
-    # TODO: Feels weird to expect HTTP 200 here.
-    # TODO: But it's an app error, not an HTTP error - we render 'new'.
-    assert_response :success
-
-    # TODO: This feels wrong, we should probably not be accessing the model.
-    assert_equal 0, User.count
-
-    assert_equal 'There were errors creating your account.', flash[:notice]
-  end
-
-  test 'it must not create a new user given an existing user' do
+  test 'it must authenticate (not create) given an existing username and password' do
 
     # TODO: I originally used an @invalid_user, and "assigns(:invalid_user), etc.
     # @invalid_user = Factory.build :user
@@ -79,6 +65,36 @@ class UsersControllerTest < ActionController::TestCase
 
     assert_redirected_to user_path(assigns(:user))
     assert_equal 'Welcome back!', flash[:notice]
+
+  end
+
+  test 'it must not create a new user given invalid attributes' do
+
+    post :create, :user => { :email => 'bad@email@address', :password => '' }
+
+    # TODO: Feels weird to expect HTTP 200 here.
+    # TODO: But it's an app error, not an HTTP error - we render 'new'.
+    assert_response :success
+
+    # TODO: This feels wrong, we should probably not be accessing the model.
+    assert_equal 0, User.count
+
+    assert_equal 'There were errors creating your account.', flash[:notice]
+  end
+
+  test 'it must not authenticate (not create) given an existing username and bad password' do
+
+    # TODO: I originally used an @invalid_user, and "assigns(:invalid_user), etc.
+    # @invalid_user = Factory.build :user
+    @user = Factory.create :user
+
+    # TODO: This should fail validation, there's no :password_confirmation => ... ??
+    post :create, :user => { :email => @user.email, :password => 'badpassword'}
+
+    # TODO: This feels wrong, we should probably not be accessing the model.
+    assert_equal 1, User.count
+
+    assert_equal 'Incorrect password.', flash[:notice]
 
   end
 
