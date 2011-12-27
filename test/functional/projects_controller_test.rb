@@ -14,14 +14,16 @@ require 'test_helper'
 
 class ProjectsControllerTest < ActionController::TestCase
 
-  # include Devise::TestHelpers
-
   def setup
-    # @request.env['devise.mapping'] = Devise.mappings[:user]
-    sign_in Factory.create(:user)
+    sign_in(Factory.create :user)
   end
 
-  test 'respond to get' do
+  test 'it must require authentication' do
+    get :new
+    assert_response :success
+  end
+
+  test 'it must respond to get' do
     get :index
     assert_response :success
   end

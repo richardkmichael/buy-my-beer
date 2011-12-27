@@ -16,7 +16,7 @@ BuyMyBeer::Application.routes.draw do
   # TODO: Q: Should we expose builds at all?
   resources :projects, :builds, :users
 
-  match '/signup', :to => 'users#new'
+  match '/login', :to => 'users#new'
 
   root :to => 'projects#index'
 end
