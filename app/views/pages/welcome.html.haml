@@ -1,15 +1,5 @@
 %h1 Welcome to Buy My Beer!
 
-- unless user_signed_in?
+%p The app that helps your co-workers buy your beer!
 
-  %h2  Please sign in!
-
-  = form_for User.new, :url => user_session_path do |f|
-    = f.label          :email, 'Email'
-    = f.text_field     :email
-    = f.label          :password, 'Password'
-    = f.password_field :password
-    = f.label          :remember_me
-    = f.check_box      :remember_me
-    = f.submit         'Sign in'
-    = link_to          'Forgot your password?', new_password_path('user')
+= render 'shared/login_panel'

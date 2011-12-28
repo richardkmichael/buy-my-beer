@@ -13,10 +13,10 @@ BuyMyBeer::Application.routes.draw do
     post '/projects/:uuid', :constraints => { :uuid => /[0-9a-f]{64}/ }, :to => 'builds#create'
   end
 
-  # TODO: Q: Should we expose builds at all?
-  resources :projects, :builds, :users
+  # resources :builds
+  resources :projects
+  resources :users
+  resources :sessions, :only => [:new, :create, :destroy]
 
-  match '/login', :to => 'users#new'
-
-  root :to => 'projects#index'
+  root :to => 'pages#welcome'
 end

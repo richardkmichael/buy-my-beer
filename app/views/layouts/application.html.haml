@@ -1,6 +1,7 @@
 !!!
 %html
-%head
+  %head
+
   %title BuyMyBeer
   = stylesheet_link_tag    'application'
   = javascript_include_tag 'application'
@@ -8,26 +9,20 @@
 
 %body
 
-  .header
+  #header
     - if current_user
       %h2= "#{current_user.email} (id: #{current_user.id}), owing: #{current_user.beers} beers!"
+      = render 'shared/logout_panel'
 
-  .flash
-    -flash.each do |key, value|
+  #flash
+    - flash.each do |key, value|
       -# TODO: Q: Will HAML let me do: ".#{key}= #{value}"?
       = content_tag(:div, value, :class => "#{key}")
 
   = yield
 
-  -# TODO: Q: Devise is already doing this, how?
-  -# = link_to 'Sign in with GitHub', user_omniauth_authorize_path(:github)
-
-  -# TODO: Seemingly not really required.  These helper method messages are in the flash too..
-  -# Required for Devise ; as indicated by 'rails generate devise:install'.
-  -# %p.notice= notice
-  -# %p.alert= alert
-
-  - if Rails.env.development?
-    .debug{:style => 'border: solid red 2px; margin-top: 20px;'}
-      = debug(params)
-      = debug(session)
+  #footer
+    - if Rails.env.development?
+      .debug{:style => 'border: solid red 2px; margin-top: 20px;'}
+        = debug(params)
+        = debug(session)

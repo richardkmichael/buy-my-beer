@@ -1,0 +1,27 @@
+#login_panel
+
+  %h2 Please sign in!
+
+  = flash[:login_errors]
+
+  - if local_assigns.has_key? :errors
+    .errors
+      %ul
+        - errors.full_messages.each do |error|
+          %li= error
+
+  = form_tag sessions_path do
+    .field
+      = label_tag          :email, 'E-mail'
+      %br
+      - if local_assigns.has_key? :email
+        = text_field_tag     :email, email
+      - else
+        = text_field_tag     :email
+
+    .field
+      = label_tag          :password, 'Password'
+      %br
+      = password_field_tag :password
+    .action
+      = submit_tag         'Login in / Sign in'

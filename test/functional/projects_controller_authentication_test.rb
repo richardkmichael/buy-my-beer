@@ -1,26 +1,29 @@
 require 'test_helper'
 
+# These tests belong in ApplicationController.
 class ProjectsControllerAuthenticationTest < ActionController::TestCase
-
-  # include Devise::TestHelpers
 
   tests ProjectsController
 
-  # Devise redirects (302 w/ Location) for navigational formats.
-  test 'it must require authentication for HTML' do
-    get :index, :format => :html
-    assert_response 302
-    assert_redirected_to new_user_session_path
+  test 'it must refuse HTML if unauthenticated' do
+    get :index
+    assert_redirected_to new_session_path
   end
 
-  test 'it must require authentication for JSON' do
-    get :index, :format => :json
-    assert_response 401
-  end
+# test 'it must allow HTML if authenticated' do
+#   # TODO: Must setup session for auth.
+#   get :index
+#   assert_response :success
+# end
 
-  test 'it must accept local credentials' do
-    @request.env['devise.mapping'] = Devise.mappings[:user]
-    sign_in Factory.create :user
-  end
+# test 'it must refuse JSON if unauthenticated' do
+#   get :index, :format => :json
+#   assert_response :unauthorized
+# end
 
+# test 'it must allow JSON if authenticated' do
+#   # TODO: Must setup JSON body for auth.
+#   get :index, :format => :json
+#   assert_response :success
+# end
 end
