@@ -11,11 +11,6 @@ gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
 
-# Authentication
-# gem 'devise'
-# gem 'omniauth'
-# gem 'omniauth-github'
-
 # Deployment
 gem 'heroku'
 
