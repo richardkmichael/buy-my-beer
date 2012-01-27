@@ -15,23 +15,43 @@ require 'test_helper'
 class ProjectsControllerTest < ActionController::TestCase
 
   def setup
-    sign_in(Factory.create :user)
+    DatabaseCleaner.start
+
+    user = Factory.create :user
+    @request.session[:user] = {}
+    @request.session[:user][:id] = user.id
   end
 
-  test 'it must require authentication' do
+  def teardown
+    DatabaseCleaner.clean
+  end
+
+  # Randomize the action?
+  test 'it must require authentication for HTML' do
+
+    session_id = @request.session[:user][:id]
+    @request.session[:user][:id] = nil
+
+    get :new
+    assert_redirected_to :new_session
+
+    @request.session[:user][:id] = session_id
+
     get :new
     assert_response :success
   end
 
-  test 'it must respond to get' do
-    get :index
-    assert_response :success
-  end
+# test 'it must require authentication for JSON' do
+#   get :new
+#   assert_redirected_to :new_session
 
-  # it 'must require authentication' do
-  #   # How to test all authentication flavours?
-  #   refute_nil @project
-  # end
+#   user = Factory.create :user
+#   @request.session[:user] = {}
+#   @request.session[:user][:id] = user.id
+
+#   get :new
+#   assert_response :success
+# end
 
   # it 'must accept GitHub credentials' do
   #
