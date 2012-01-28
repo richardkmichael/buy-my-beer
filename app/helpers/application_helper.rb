@@ -10,6 +10,7 @@ module ApplicationHelper
 
   def sign_out
     self.current_user = nil
+    session.clear
   end
 
   def current_user=(user)

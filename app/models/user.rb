@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
 
   def self.authenticate(email, password)
     user = find_by_email(email)
-    if user and user.encrypted_password == user.has_password?(password)
+    if user && user.has_password?(password)
       user
     else
       nil
