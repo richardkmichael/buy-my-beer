@@ -29,4 +29,6 @@ BuyMyBeer::Application.configure do
   # Do not compress assets
   config.assets.compress = false
 
+  # Configure sensitive parameters which will be filtered from the log file.
+  config.filter_parameters = []
 end
