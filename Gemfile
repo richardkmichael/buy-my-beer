@@ -1,8 +1,7 @@
 source :rubygems
 
-# Core
-gem 'rails'#, '3.1'
-gem 'pg'  # For Heroku. Do they override config/database.yml?
+gem 'rails'
+gem 'pg'
 
 # Asset template engines
 gem 'jquery-rails'
