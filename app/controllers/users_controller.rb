@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+
   def show
     @user = User.find(params[:id])
   end
@@ -10,22 +11,7 @@ class UsersController < ApplicationController
   # This action is actually doing auth too; ugh.  Needs a LoginController.
   def create
 
-    # # Could try using our own User.authenticate().
-    # @user = User.new(params[:user]
-    # if User.authenticate(@user.email, @user.password)
-    #   redirect_to @user
-    # else
-    #   if @user.valid?
-    #     @user.save
-    #     redirect_to @user
-    #   else
-    #     render 'new' # Is render() terminating?
-    #   end
-    # end
-    # # Refactor and do: "redirect_to @user" here.
-
-
-    # Order matters, create a new user if find fails.
+    # Order matters: create a new user if find fails.
     @user = User.find_by_email(params[:user][:email]) || User.new(params[:user])
 
     if @user.new_record?
