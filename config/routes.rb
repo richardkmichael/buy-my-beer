@@ -13,7 +13,7 @@ BuyMyBeer::Application.routes.draw do
     post '/projects/:uuid', :constraints => { :uuid => /[0-9a-f]{64}/ }, :to => 'builds#create'
   end
 
-  # resources :builds
+  resources :builds
   resources :projects
   resources :users
   resources :sessions, :only => [:new, :create, :destroy]
