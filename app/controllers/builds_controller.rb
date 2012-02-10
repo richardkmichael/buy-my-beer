@@ -2,30 +2,34 @@ class BuildsController < ApplicationController
 
   respond_to :html, :json
 
+  before_filter :find_project, :find_last_commiter
+
   def create
-    build = Build.new( :status      => params[:build][:status],
-                       :last_commit => params[:build][:last_commit] )
 
-    # Find the owning project.
-    logger.debug "DEBUG: Project ID: #{params[:project_id]}"
-    build.project = Project.find_by_id(params[:project_id])
+    build = @project.builds.new(params[:build])
+    respond_with(build.project, build)
 
-    # Find the last commiter.
-    build.last_commiter = User.find_by_email(params[:build][:last_commiter])
+#     if build.valid? && build.save
+#       respond_with(build.project, build)
+#     else
 
-    # If the build is valid, save it and give the conventional response.
-    if build.valid? && build.save
-      respond_with build
-      # TODO: Use respond_to format.json, etc. instead.
-    else
+#       # TODO: If for JSON, we must return JSON with errors.
+#       #       If for HTML, we must return a form with errors - but the UI never sees this.
+#       render :status => 400,
+#              :json   => { :message => 'Invalid build.',
+#                           :errors  => build.errors.full_messages,
+#                           :build   => build }
+#     end
+  end
 
-      # TODO: If for JSON, we must return JSON with errors.
-      #       If for HTML, we must return a form with errors - but the UI never sees this.
-      render :status => 400,
-             :json   => { :message => 'Invalid build.',
-                          :errors  => build.errors.full_messages,
-                          :build   => build }
-    end
+  protected
+
+  def find_project
+    @project = Project.find_by_id(params[:project_id])
+  end
+
+  def find_last_commiter
+    params[:build][:last_commiter] = User.find_by_email(params[:build][:last_commiter])
   end
 
 end

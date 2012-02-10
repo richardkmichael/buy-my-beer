@@ -13,7 +13,7 @@ BuyMyBeer::Application.routes.draw do
 # end
 
   resources :projects do
-    resources :builds, :only => :create
+    resources :builds, :only => [:create, :show]
   end
 
   resources :users
