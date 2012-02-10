@@ -5,21 +5,8 @@ class BuildsController < ApplicationController
   before_filter :find_project, :find_last_commiter
 
   def create
-
     build = @project.builds.new(params[:build])
     respond_with(build.project, build)
-
-#     if build.valid? && build.save
-#       respond_with(build.project, build)
-#     else
-
-#       # TODO: If for JSON, we must return JSON with errors.
-#       #       If for HTML, we must return a form with errors - but the UI never sees this.
-#       render :status => 400,
-#              :json   => { :message => 'Invalid build.',
-#                           :errors  => build.errors.full_messages,
-#                           :build   => build }
-#     end
   end
 
   protected
