@@ -104,4 +104,5 @@ class BuildsControllerTest < ActionController::TestCase
     assert_equal 0, Build.count, "There should be 0 build(s), but there are #{Build.count}"
 
   end
+
 end

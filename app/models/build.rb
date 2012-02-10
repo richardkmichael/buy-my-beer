@@ -4,11 +4,12 @@ class Build < ActiveRecord::Base
              :add_last_commiter_to_collaborations
 
   # See: ActiveRecord::ConnectionAdapters::Column (TRUE|FALSE)_VALUES.
-  #      nil is not a FALSE value.  This is effectively :presence => true.
+  #      Specifically, nil (SQL null) is not a FALSE value.
+  #      This is effectively :presence => true.
   validates :status, :inclusion => { :in => [true, false] }
 
-  # Git SHA1 only.
-  validates :last_commit, :format => /[a-z0-9]{40}/i
+  GIT_SHA1_REGEX = /[a-z0-9]{40}/i
+  validates :last_commit, :format => GIT_SHA1_REGEX
 
   validates :project, :presence => true
   belongs_to :project
