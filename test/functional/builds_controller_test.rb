@@ -13,7 +13,7 @@ class BuildsControllerTest < ActionController::TestCase
     assert_equal 0, Build.count, "There should be 0 builds, but there are #{Build.count}"
   end
 
-  test 'it must create a build by valid POST' do
+  test 'it must create a build when POSTed valid attributes' do
 
     # Use a factory to prepare related models; ensure the factory and validations agree.
     build = Factory.build :build
@@ -37,19 +37,25 @@ class BuildsControllerTest < ActionController::TestCase
 
   end
 
-# test 'it must not create a build by invalid POST' do
+  test 'it must not create a build when POSTed invalid attributes' do
 
-#   # Use a factory to insure related models are prepared for the build.
-#   build = Factory.build :build
-#   assert build.valid?
+    # Use a factory to insure related models are prepared for the build.
+    build = Factory.build :build
+    assert build.valid?
 
-#   post :create, :build => { # :uuid          => build.project.uuid,
-#                             :status        => build.status,
-#                             :last_commit   => build.last_commit,
-#                             :last_commiter => build.last_commiter.email }
+    # Post without the required UUID.
+    post :create, :build => { :status        => build.status,
+                              :last_commit   => build.last_commit,
+                              :last_commiter => build.last_commiter.email }
 
-#   assert_response :success
-#   assert_equal 1, Build.count, "There should be 1 build, but there are #{Build.count}"
+    assert_response :bad_request
 
-# end
+    assert_block('Expected to response to be JSON.') { @response_json = JSON.parse @response.body }
+    assert_kind_of Hash, @response_json
+
+    assert_match @response_json['message'], /^Invalid build/
+
+    assert_equal 0, Build.count, "There should be 0 build(s), but there are #{Build.count}"
+
+  end
 end

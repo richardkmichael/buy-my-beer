@@ -14,15 +14,17 @@ class BuildsController < ApplicationController
       # Save the build, respond with it as JSON.
       if build.valid?
         build.save
-        render :json   => build.to_json,
+        render :json   => build,
                :status => 200
       else
-        render :json   => "Invalid build. #{build.errors.full_messages}",
+        render :json   => { :message => 'Invalid build.',
+                            :errors  => build.errors.full_messages,
+                            :build   => build },
                :status => 400
       end
 
     rescue MultiJson::DecodeError => e
-      render :json   => 'You sent malformed JSON, oops!',
+      render :json   => { :message => 'Received malformed JSON.' },
              :status => 400
     end
   end
