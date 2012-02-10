@@ -1,3 +1,8 @@
+# TODO:
+#  1/ Before filter rescues: what if project and user do not exist?
+#  2/ show() action for HTML redirect response.
+#  3/ new() template (no action required) for bad HTML create().
+
 class BuildsController < ApplicationController
 
   respond_to :html, :json
@@ -5,7 +10,7 @@ class BuildsController < ApplicationController
   before_filter :find_project, :find_last_commiter
 
   def create
-    build = @project.builds.new(params[:build])
+    build = @project.builds.create(params[:build])
     respond_with(build.project, build)
   end
 

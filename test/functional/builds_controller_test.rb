@@ -19,21 +19,13 @@ class BuildsControllerTest < ActionController::TestCase
     build = Factory.build :build
     assert build.valid?
 
-    post :create, :project_id => build.project_id,
-                  :build      => { :status        => build.status,
-                                   :last_commit   => build.last_commit,
-                                   :last_commiter => build.last_commiter.email }
+    post :create, { :project_id => build.project_id,
+                    :build      => { :status        => build.status,
+                                     :last_commit   => build.last_commit,
+                                     :last_commiter => build.last_commiter.email } }
 
-    ap @response.body
-
-    assert_response :success
-
-    assert_block('Expected to response to be JSON.') { @response_build = JSON.parse @response.body }
-    assert_kind_of Hash, @response_build
-
-    assert_equal( @response_build['status'],           build.status )
-    assert_equal( @response_build['last_commit'],      build.last_commit )
-    assert_equal( @response_build['last_commiter_id'], build.last_commiter.id )
+    # HTML POSTs are sent to the show page.
+    assert_response :redirect
 
     assert_equal 1, Build.count, "There should be 1 build, but there are #{Build.count}"
 
@@ -45,11 +37,11 @@ class BuildsControllerTest < ActionController::TestCase
     build = Factory.build :build
     assert build.valid?
 
-    post :create, :format     => :json,
-                  :project_id => build.project_id,
-                  :build      => { :status        => build.status,
-                                   :last_commit   => build.last_commit,
-                                   :last_commiter => build.last_commiter.email }
+    post :create, { :format     => :json,
+                    :project_id => build.project_id,
+                    :build      => { :status        => build.status,
+                                     :last_commit   => build.last_commit,
+                                     :last_commiter => build.last_commiter.email } }
 
     assert_response :success
 
@@ -70,25 +62,15 @@ class BuildsControllerTest < ActionController::TestCase
     build = Factory.build :build
     assert build.valid?
 
-    # Debug.
-    # ap build
+    # POST without the required status attribute.
+    post :create, { :project_id => build.project_id,
+                    :build      => { :last_commit   => build.last_commit,
+                                     :last_commiter => build.last_commiter.email } }
 
-    # Post without the required project_id attribute.
-    # TODO: How does this route work?  There is no :project_id.  Routing is skipped?
-    post :create, :build => { :status        => build.status,
-                              :last_commit   => build.last_commit,
-                              :last_commiter => build.last_commiter.email }
+    # Bad HTML POSTs are 200, and render the new template.
+    assert_response :success
 
-    assert_response :bad_request
-
-    # Debug.
-    # ap @response.headers
-    # ap @response.body
-
-    assert_block('Expected to response to be JSON.') { @response_json = JSON.parse @response.body }
-    assert_kind_of Hash, @response_json
-
-    assert_match @response_json['message'], /^Invalid build/
+    # TODO: Need an assert on new template content?
 
     assert_equal 0, Build.count, "There should be 0 build(s), but there are #{Build.count}"
 
@@ -100,18 +82,19 @@ class BuildsControllerTest < ActionController::TestCase
     build = Factory.build :build
     assert build.valid?
 
-    # Post without the required project_id attribute.
-    post :create, :format => :json,
-                  :build  => { :status => build.status,
-                               :last_commit   => build.last_commit,
-                               :last_commiter => build.last_commiter.email }
+    # POST without the required status attribute.
+    post :create, { :format     => :json,
+                    :project_id => build.project_id,
+                    :build      => { :last_commit   => build.last_commit,
+                                     :last_commiter => build.last_commiter.email } }
 
-    assert_response :bad_request
+    # Bad JSON POSTs are 422, with a JSON body of errors.
+    assert_response :unprocessable_entity
 
     assert_block('Expected to response to be JSON.') { @response_json = JSON.parse @response.body }
     assert_kind_of Hash, @response_json
 
-    assert_match @response_json['message'], /^Invalid build/
+    assert_equal ['is not included in the list'], @response_json['errors']['status']
 
     assert_equal 0, Build.count, "There should be 0 build(s), but there are #{Build.count}"
 
