@@ -19,10 +19,12 @@ class BuildsControllerTest < ActionController::TestCase
     build = Factory.build :build
     assert build.valid?
 
-    post :create, :build => { :uuid          => build.project.uuid,
-                              :status        => build.status,
-                              :last_commit   => build.last_commit,
-                              :last_commiter => build.last_commiter.email }
+    post :create, :project_id => build.project_id,
+                  :build      => { :status        => build.status,
+                                   :last_commit   => build.last_commit,
+                                   :last_commiter => build.last_commiter.email }
+
+    ap @response.body
 
     assert_response :success
 
@@ -43,10 +45,11 @@ class BuildsControllerTest < ActionController::TestCase
     build = Factory.build :build
     assert build.valid?
 
-    post :create, :format => :json, :build => { :uuid          => build.project.uuid,
-                                                :status        => build.status,
-                                                :last_commit   => build.last_commit,
-                                                :last_commiter => build.last_commiter.email }
+    post :create, :format     => :json,
+                  :project_id => build.project_id,
+                  :build      => { :status        => build.status,
+                                   :last_commit   => build.last_commit,
+                                   :last_commiter => build.last_commiter.email }
 
     assert_response :success
 
@@ -67,12 +70,20 @@ class BuildsControllerTest < ActionController::TestCase
     build = Factory.build :build
     assert build.valid?
 
-    # Post without the required UUID attribute.
+    # Debug.
+    # ap build
+
+    # Post without the required project_id attribute.
+    # TODO: How does this route work?  There is no :project_id.  Routing is skipped?
     post :create, :build => { :status        => build.status,
                               :last_commit   => build.last_commit,
                               :last_commiter => build.last_commiter.email }
 
     assert_response :bad_request
+
+    # Debug.
+    # ap @response.headers
+    # ap @response.body
 
     assert_block('Expected to response to be JSON.') { @response_json = JSON.parse @response.body }
     assert_kind_of Hash, @response_json
@@ -89,10 +100,11 @@ class BuildsControllerTest < ActionController::TestCase
     build = Factory.build :build
     assert build.valid?
 
-    # Post without the required UUID attribute.
-    post :create, :format => :json, :build => { :status        => build.status,
-                                                :last_commit   => build.last_commit,
-                                                :last_commiter => build.last_commiter.email }
+    # Post without the required project_id attribute.
+    post :create, :format => :json,
+                  :build  => { :status => build.status,
+                               :last_commit   => build.last_commit,
+                               :last_commiter => build.last_commiter.email }
 
     assert_response :bad_request
 

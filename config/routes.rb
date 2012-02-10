@@ -1,20 +1,21 @@
 BuyMyBeer::Application.routes.draw do
 
-  class JSONApiRequestConstraint
-    def self.matches?(request)
-      request.env['CONTENT_TYPE'] == 'application/vnd.build-v1+json'  # config/initializers/mime_types.rb
-    end
+# class JSONApiRequestConstraint
+#   def self.matches?(request)
+#     request.env['CONTENT_TYPE'] == 'application/vnd.build-v1+json'  # config/initializers/mime_types.rb
+#   end
+# end
+
+# scope :constraints => JSONApiRequestConstraint do
+#   post '/projects/:uuid', :constraints => { :uuid => /[0-9a-f]{64}/ },
+#                           :to => 'builds#create',
+#                           :as => create_json_build
+# end
+
+  resources :projects do
+    resources :builds, :only => :create
   end
 
-  # TODO: Q: How does Rails know what :uuid is?  (e.g. integer, the entire remaining string, etc.)
-  # TODO: Q: How to make this a named route, so we can have _path/_url helpers?
-  # TODO: Q: Is this a resourceful route?  Should it be nested under "resources :projects do .. " ?
-  scope :constraints => JSONApiRequestConstraint do
-    post '/projects/:uuid', :constraints => { :uuid => /[0-9a-f]{64}/ }, :to => 'builds#create'
-  end
-
-  resources :builds
-  resources :projects
   resources :users
   resources :sessions, :only => [:new, :create, :destroy]
 
