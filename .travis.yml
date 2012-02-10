@@ -1,0 +1,8 @@
+language: ruby
+before_script:
+  - bundle exec rake db:create
+  - bundle exec rake db:schema:load
+bundler_args: --without development
+rvm:
+  - 1.9.3
+
