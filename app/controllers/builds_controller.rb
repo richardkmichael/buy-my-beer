@@ -8,6 +8,7 @@ class BuildsController < ApplicationController
   respond_to :html, :json
 
   before_filter :find_project, :find_last_commiter
+  # before_filter :identify_build
 
   def create
     build = @project.builds.create(params[:build])
@@ -24,4 +25,7 @@ class BuildsController < ApplicationController
     params[:build][:last_commiter] = User.find_by_email(params[:build][:last_commiter])
   end
 
+  def identify_build
+
+  end
 end

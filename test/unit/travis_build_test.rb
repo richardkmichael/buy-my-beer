@@ -15,8 +15,19 @@ class TravisBuildTest < ActiveSupport::TestCase
     assert_kind_of TravisBuild, travis_build
   end
 
-  test 'it must be provide the commit SHA1' do
-    assert_respond_to @travis_build, :commit
-    assert_equal @travis_build.commit, '62aae5f70ceee39123ef'
+  test 'it must provide the commit SHA1' do
+    assert_respond_to @travis_build, :last_commit
+    assert_equal @travis_build.last_commit, '62aae5f70ceee39123ef'
   end
+
+  test 'it must provide the last commiter email address' do
+    assert_respond_to @travis_build, :last_commiter
+    assert_equal @travis_build.last_commiter, 'svenfuchs@artweb-design.de'
+  end
+
+  test 'it must provide the build status as a boolean' do
+    assert_respond_to @travis_build, :status
+    refute @travis_build.status, 'The test build should be false, JSON status is null.'
+  end
+
 end
