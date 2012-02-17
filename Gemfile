@@ -12,7 +12,6 @@ gem 'heroku'
 
 group :development do
   gem 'cucumber-rails'
-  gem 'growl_notify'
   gem 'pry'
   gem 'gist'
   gem 'rb-fsevent'
