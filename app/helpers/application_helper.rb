@@ -19,9 +19,9 @@ module ApplicationHelper
 
   def current_user
     case request.format
-    when 'text/html'
+    when /text\/html/
       @current_user ||= user_from_session
-    when 'application/json'
+    when /application\/json/
       @current_user ||= user_from_json
     end
   end
@@ -29,9 +29,9 @@ module ApplicationHelper
   # Use as "before_filter :authenticate_user".
   def authenticate_user
     case request.format
-    when  'text/html'
+    when  /text\/html/
       redirect_to new_session_path unless current_user
-    when 'application/json'
+    when /application\/json/
       head :unauthorized           unless current_user
     end
 
