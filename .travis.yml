@@ -5,4 +5,5 @@ before_script:
 bundler_args: --without development
 rvm:
   - 1.9.3
-
+notifications:
+  webhooks: http://buy-my-beer.herokuapp.com/projects/1/builds
