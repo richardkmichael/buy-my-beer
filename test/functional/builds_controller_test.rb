@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class BuildsControllerTest < ActionController::TestCase
 
@@ -56,6 +56,7 @@ class BuildsControllerTest < ActionController::TestCase
 
   end
 
+  # TODO: Shouldn't this also return 422.html (as JSON returns 422)?
   test 'it must not create a build when POSTed invalid attributes' do
 
     # Use a factory to insure related models are prepared for the build.
@@ -76,13 +77,13 @@ class BuildsControllerTest < ActionController::TestCase
 
   end
 
-  test 'it must not create a build when JSON POSTed invalid attributes' do
+  test 'it must return a 422 when JSON POSTed invalid attributes' do
 
     # Use a factory to insure related models are prepared for the build.
     build = Factory.build :build
     assert build.valid?
 
-    # POST without the required status attribute.
+    # POST without :status.
     post :create, { :format     => :json,
                     :project_id => build.project_id,
                     :build      => { :last_commit   => build.last_commit,
@@ -98,6 +99,54 @@ class BuildsControllerTest < ActionController::TestCase
 
     assert_equal 0, Build.count, "There should be 0 build(s), but there are #{Build.count}"
 
+  end
+
+  test 'it must return a 422 when POSTed invalid JSON' do
+
+    # Use a factory to insure related models are prepared for the build.
+    build = Factory.build :build
+    assert build.valid?
+
+    # POST without :project_id.
+    post :create, { :format     => :json,
+                    :project_id => '',
+                    :build      => { :last_commit   => build.last_commit,
+                                     :last_commiter => build.last_commiter.email } }
+
+    # Bad JSON POSTs are 422, with a JSON body of errors.
+    assert_response :unprocessable_entity
+
+    assert_equal 0, Build.count, "There should be 0 build(s), but there are #{Build.count}"
+
+  end
+
+  test 'it should identify a Travis build' do
+
+    puts 'DEBUG --> Travis build start'
+
+    build = Factory.build :build
+    assert build.valid?
+
+    json = File.read('test/fixtures/travis_build.json')
+    travis_build = JSON.parse(json)
+
+    # params = ActiveSupport::HashWithIndifferentAccess.new
+    params = Hash.new
+    params[:format] = :json
+    params[:project_id] = build.project_id
+    params.merge! travis_build
+
+    # post :create, { :format => :json, :project_id => build.project_id, :build => json }
+    # post :create, { :format => :json }, params
+    #
+    # This is x-www-form-urlencoding the params.  Why?  Tried :format => :json. :-(
+    post :create, params
+
+    puts @response.status
+    puts @response.headers
+    puts 'DEBUG --> Travis build end'
+
+    assert_equal 1, Build.count, "There should be 1 build, but there are #{Build.count}"
   end
 
 end

@@ -9,6 +9,7 @@ class TravisBuildTest < ActiveSupport::TestCase
     @travis_build = TravisBuild.from_json(json)
   end
 
+  # setup() would fail if this didn't work, but test it anyway in case setup() changes.
   test 'it must initialize from JSON' do
     json = File.read('test/fixtures/travis_build.json')
     travis_build = TravisBuild.from_json(json)

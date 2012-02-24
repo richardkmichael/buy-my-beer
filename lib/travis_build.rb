@@ -33,6 +33,10 @@ class TravisBuild
     attributes.each_pair { |k, v| instance_variable_set("@#{k}", v) }
   end
 
+  #
+  # Methods below provide compatibility with Build (app/models/build.rb).
+  #
+
   def status
     ( @status.nil? || @status == 0 ) ? false : true
   end
