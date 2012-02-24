@@ -8,7 +8,7 @@ class Build < ActiveRecord::Base
   #      This is effectively :presence => true.
   validates :status, :inclusion => { :in => [true, false] }
 
-  GIT_SHA1_REGEX = /[a-z0-9]{40}/i
+  GIT_SHA1_REGEX = /\A[a-z0-9]{7,}\Z/i
   validates :last_commit, :format => GIT_SHA1_REGEX
 
   validates :project, :presence => true

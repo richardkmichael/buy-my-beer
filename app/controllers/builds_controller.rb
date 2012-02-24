@@ -17,6 +17,11 @@ class BuildsController < ApplicationController
   # if ! params[:build]
   #   wrap_parameters :format => :json, :include => [ only travis build attrs we want ]
   # end
+
+  # Rails will inspect the Build model and automatically wrap up known attributes into a
+  # :build => { ... } hash.
+  wrap_parameters false
+
   #
   # skip_before_filter :authenticate_user
 
@@ -60,7 +65,7 @@ class BuildsController < ApplicationController
 
   def find_last_commiter
     puts "DEBUG: #{__method__}"
-    # When last_commiter is not found, a validation error is added to the build; helpful.
+    # If user is not found, should add 'User does not exist' error, not 'cannot be blank'.
     params[:build][:last_commiter] = User.find_by_email(params[:build][:last_commiter])
   end
 
@@ -90,7 +95,7 @@ class BuildsController < ApplicationController
       params[:build] = Hash.new
       params[:build][:status]         = travis_build.status
       params[:build][:last_commit]    = travis_build.last_commit
-      params[:build][:last_commiter] = travis_build.last_commiter
+      params[:build][:last_commiter]  = travis_build.last_commiter
 
     end
 
